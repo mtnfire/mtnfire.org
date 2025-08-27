@@ -233,3 +233,10 @@ a:hover{opacity:.8}
   .social-rail .icon-row{ flex-direction: row; gap: 8px; }
   .social-rail .icon{ width: 34px; height: 34px; border-radius: 10px; }
 }
+
+/* Mobile: hide any header socials, show floating rail */
+@media (max-width: 820px){
+  .nav-social{ display: none !important; }      /* primary */
+  .nav .icon-row{ display: none !important; }   /* fallback if wrapper not present */
+  .social-rail{ display: block !important; }    /* force rail on */
+}
