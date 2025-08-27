@@ -8,37 +8,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css?v={{ site.time | date: '%s' }}">
   {% include head.html %}
 </head>
-  <div class="social-rail" aria-label="Social links">
-  {% include social-icons.html %}
-</div>
-
 <body>
   <header class="site-head">
     <a class="logo" href="{{ site.baseurl }}/">{{ site.title }}</a>
     <nav class="nav">
       <a href="{{ site.baseurl }}/episodes/">Episodes</a>
       <a href="{{ site.baseurl }}/about/">About</a>
-      {% if site.logo_image %}
-  <a href="{{ site.baseurl }}/" class="nav-logo-link" aria-label="{{ site.title }}">
-    <img class="nav-mark" src="{{ site.baseurl }}{{ site.logo_image }}" alt="{{ site.title }} logo">
-  </a>
-{% endif %}
-<div class="social-rail" aria-label="Social links">
-  {% include social-icons.html %}
-</div>
 
+      <!-- Desktop-only socials in the header -->
+      <div class="nav-social">
+        {% include social-icons.html %}
+      </div>
+
+      {% if site.logo_image %}
+        <a href="{{ site.baseurl }}/" class="nav-logo-link" aria-label="{{ site.title }}">
+          <img class="nav-mark" src="{{ site.baseurl }}{{ site.logo_image }}" alt="{{ site.title }} logo" loading="lazy">
+        </a>
+      {% endif %}
     </nav>
   </header>
+
+  <!-- Mobile-only floating rail (kept outside the header/nav) -->
+  <div class="social-rail" aria-label="Social links">
+    {% include social-icons.html %}
+  </div>
+
   <main>
     {{ content }}
   </main>
-<footer class="site-foot">
-  <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
-</footer>
 
-
+  <footer class="site-foot">
+    <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
+  </footer>
 </body>
 </html>
