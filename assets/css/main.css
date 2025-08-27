@@ -190,3 +190,35 @@ a:hover{opacity:.8}
 .site-foot .icon{ border-color:var(--rule) }
 .site-foot .muted{ margin-top:8px; font-size:.9rem }
 
+/* --- Right-side social rail --- */
+.social-rail{
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  pointer-events: none;      /* rail doesn't block page clicks... */
+}
+.social-rail .icon-row{
+  display: flex;
+  flex-direction: column;    /* vertical stack */
+  gap: 10px;
+  margin: 0;
+  pointer-events: auto;      /* ...but icons are clickable */
+}
+.social-rail .icon{
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  backdrop-filter: saturate(120%) blur(6px);
+  background: rgba(0,0,0,.06);
+  border: 1px solid var(--rule);
+}
+@media (prefers-color-scheme: dark){
+  .social-rail .icon{ background: rgba(255,255,255,.08); }
+}
+
+/* On small screens, move to the bottom-right as a row */
+@media (max-width: 820px){
+  .social-rail{ top: auto; bottom: 14px; right: 14px; transform: none; }
+  .social-rail .icon-row{ flex-direction: row; }
+}
