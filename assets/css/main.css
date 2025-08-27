@@ -121,18 +121,13 @@ a:hover{opacity:.8}
   .site-head,.site-foot{ border-color:#2a2c2e; }
 }
 
-/* Episode page: tame giant cover images */
+/* Optional: banner-style crop */
 .post-cover{
-  display:block;
   width:100%;
-  height:auto;          /* keep original aspect ratio */
-  max-width:720px;      /* cap size on large screens */
-  margin:16px auto;     /* center the image */
+  max-height:420px;
+  aspect-ratio:16/9;
+  object-fit:cover;     /* crops tall images nicely */
   border-radius:12px;
 }
-.player.big{
-  max-width:720px;      /* match the cover width */
-  margin:12px auto 0;
-}
-
+.player.big{ max-width:900px; margin:12px auto 0; }
 
