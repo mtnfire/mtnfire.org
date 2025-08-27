@@ -1,6 +1,6 @@
 # MTN.fire Jekyll Starter
 
-A minimal, Pops-style podcast site for GitHub Pages + Cloudflare.
+A minimal, podcast site for GitHub Pages + Cloudflare.
 
 ## Quick Start
 1. Create a new GitHub repo (e.g. `mtnfire.org`) and keep it empty.
