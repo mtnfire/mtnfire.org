@@ -35,3 +35,13 @@ podcast:
   pandora:       "https://www.pandora.com/podcast/mtnfire/PC:1001108008"
   castbox:       "https://castbox.fm/vh/6572502"
   podchaser:     "https://www.podchaser.com/podcasts/mtnfire-6069397"
+
+  
+logo_image: "/logo.png"   # since logo.png is at the repo root
+
+socials:
+  facebook: "https://www.facebook.com/MTN.fire86"
+  youtube:  "https://www.youtube.com/mtnfire"
+  instagram:  "https://www.instagram.com/mtn.fire/"
+  tiktok:   "https://www.tiktok.com/@mtn.fire"
+  email: "mailto:mtn.fire86@gmail.com"   # optional, like: "mailto:you@mtnfire.org"
