@@ -22,16 +22,19 @@
     <img class="nav-mark" src="{{ site.baseurl }}{{ site.logo_image }}" alt="{{ site.title }} logo">
   </a>
 {% endif %}
+<div class="social-rail" aria-label="Social links">
+  {% include social-icons.html %}
+</div>
 
     </nav>
   </header>
   <main>
     {{ content }}
   </main>
-  <footer class="site-foot">
-    {% include social-icons.html %}
-    <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
-  </footer>
+<footer class="site-foot">
+  <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
+</footer>
+
 
 </body>
 </html>
