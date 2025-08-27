@@ -23,7 +23,7 @@ title: MTN.fire
     {% if latest %}
       <article class="feature">
         <div class="feature-info">
-          <h3><a href="{{ latest.url }}">{{ latest.title }}</a></h3>
+          <h3><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h3>
           <p class="muted">{{ latest.date | date: "%B %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}</p>
           <p>{{ latest.excerpt }}</p>
           <div class="player">
@@ -46,7 +46,7 @@ title: MTN.fire
     <div class="cards">
       {% assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" | limit:12 %}
       {% for post in eps %}
-        <a class="card" href="{{ post.url }}">
+        <a class="card" href="{{ post.url | relative_url }}">
           {% if post.cover %}<img src="{{ post.cover }}" alt="">{% endif %}
           <div class="card-body">
             <h3>{{ post.title }}</h3>
