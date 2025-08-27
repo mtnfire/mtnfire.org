@@ -10,7 +10,7 @@ permalink: /episodes/
     <div class="cards">
       {% assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" %}
       {% for post in eps %}
-        <a class="card" href="{{ post.url }}">
+        <a class="card" href="{{ post.url | relative_url }}">
           {% if post.cover %}<img src="{{ post.cover }}" alt="">{% endif %}
           <div class="card-body">
             <h3>{{ post.title }}</h3>
