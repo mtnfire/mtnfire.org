@@ -138,3 +138,16 @@ a:hover{opacity:.8}
 .listen-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
 .pill.small{ padding:8px 12px; font-size:.9rem; border-radius:999px }
 
+/* Hero polish */
+.hero{
+  padding: clamp(56px, 8vw, 96px) 0;
+  border-bottom: 1px solid var(--rule);
+  /* gentle spotlight gradients */
+  background:
+    radial-gradient(900px 350px at 20% -10%, rgba(255,90,31,.10), transparent 60%),
+    radial-gradient(700px 280px at 80% -10%, rgba(255,255,255,.06), transparent 60%);
+}
+.hero .wrap{ max-width: 820px; text-align: center; }
+.brand{ font-weight: 800; letter-spacing: -0.02em; }
+.tag{ font-size: 1.1rem; color: var(--muted); margin: .25rem 0 1rem; }
+.subs{ margin-top: .5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
