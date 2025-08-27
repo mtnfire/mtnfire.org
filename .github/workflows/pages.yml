@@ -4,18 +4,37 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"  # daily at 12:00 UTC
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Import episodes from your RSS feed
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: pip install feedparser python-slugify
+      - run: python scripts/import_rss.py
+        env:
+          FEED_URL: ${{ secrets.PODCAST_RSS }}
+
+      # Build Jekyll
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
       - run: bundle install
       - run: bundle exec jekyll build -d ./_site
+
+      # Upload artifact for Pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
