@@ -8,15 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
   {% include head.html %}
 </head>
 <body>
   <header class="site-head">
-    <a class="logo" href="/">{{ site.title }}</a>
+    <a class="logo" href="{{ site.baseurl }}/">{{ site.title }}</a>
     <nav class="nav">
-      <a href="/episodes/">Episodes</a>
-      <a href="/about/">About</a>
+      <a href="{{ site.baseurl }}/episodes/">Episodes</a>
+      <a href="{{ site.baseurl }}/about/">About</a>
     </nav>
   </header>
   <main>
