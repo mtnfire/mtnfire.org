@@ -21,3 +21,17 @@ social:
 
 # Add your Cloudflare Web Analytics token below (optional)
 cloudflare_analytics_token: ""
+
+podcast:
+  rss:     "https://anchor.fm/s/103bdda2c/podcast/rss"
+  apple:   "https://podcasts.apple.com/us/podcast/id1809171724?mt=2&ls=1"
+  spotify: "https://open.spotify.com/show/6uoU1NT8OeoFoYmekrzHVe"
+  amazon:  "https://music.amazon.com/es-cl/podcasts/b81bf24f-4d9b-468f-b306-2459da4d0eb7/mtn-fire"
+  youtube: "https://music.youtube.com/playlist?list=PLIIH4tvdLWqC6Rhqp8YOxRYrqvj4_23aX&si=9GeTgSopdPPMf4u9"
+
+  iheart:        "https://www.iheart.com/podcast/1333-mtnfire-272950909/"
+  podcastaddict: "https://podcastaddict.com/podcast/mtnfire/6051511"
+  spreaker:      "https://www.spreaker.com/podcast/mtn-fire--6711600"
+  pandora:       "https://www.pandora.com/podcast/mtnfire/PC:1001108008"
+  castbox:       "https://castbox.fm/vh/6572502"
+  podchaser:     "https://www.podchaser.com/podcasts/mtnfire-6069397"
