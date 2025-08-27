@@ -29,7 +29,9 @@
     {{ content }}
   </main>
   <footer class="site-foot">
+    {% include social-icons.html %}
     <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
   </footer>
+
 </body>
 </html>
