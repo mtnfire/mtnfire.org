@@ -12,7 +12,12 @@ permalink: /about/
       <!-- 📝 Paste your Podpage “About” text between the markers below -->
       <div class="prose">
         <!-- START: YOUR ABOUT TEXT -->
-        <p><strong>Paste the exact text you like from Podpage here.</strong> You can keep paragraphs, line breaks, and links—this section will style them nicely.</p>
+        <p><strong>MTN.fire is where real stories meet the unshakable truth of the Gospel.
+Each episode blends raw testimony, scripture, and honest conversation — no sugarcoating, no watered-down faith. From the Appalachian mountains to the ends of the earth, this is about carrying the fire of God into everyday life.
+
+We talk about the valleys and the victories, the moments when faith feels easy and the nights when it’s a fight to keep believing. Whether it’s diving into the book of Job, unpacking personal trials, or sharing how God’s moved in powerful ways, MTN.fire is here to remind you: Jesus still changes everything.
+
+If you’re looking for bold truth, gritty hope, and a spark to keep your faith alive — welcome to the fire.</p>
         <!-- END: YOUR ABOUT TEXT -->
       </div>
 
