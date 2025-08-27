@@ -7,12 +7,34 @@ title: MTN.fire
   <div class="wrap">
     <h1 class="brand">MTN.fire</h1>
     <p class="tag">Testimony. Fire. Hope.</p>
-    <div class="subs">
-      <a class="pill" href="https://podcasts.apple.com/" target="_blank" rel="noopener">Apple Podcasts</a>
-      <a class="pill" href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify</a>
-      <a class="pill" href="https://music.amazon.com/podcasts" target="_blank" rel="noopener">Amazon</a>
-      <a class="pill" href="https://www.youtube.com/@MTN-fire" target="_blank" rel="noopener">YouTube</a>
-    </div>
+   <div class="subs">
+  {% if site.podcast.apple %}
+    <a class="pill" href="{{ site.podcast.apple }}" target="_blank" rel="noopener">Apple Podcasts</a>
+  {% endif %}
+  {% if site.podcast.spotify %}
+    <a class="pill" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener">Spotify</a>
+  {% endif %}
+  {% if site.podcast.amazon %}
+    <a class="pill" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener">Amazon</a>
+  {% endif %}
+  {% if site.podcast.youtube %}
+    <a class="pill" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener">YouTube</a>
+  {% endif %}
+  {% if site.podcast.rss %}
+    <a class="pill" href="{{ site.podcast.rss }}" target="_blank" rel="noopener">RSS</a>
+  {% endif %}
+</div>
+
+<div class="muted" style="margin-top:.5rem">
+  Also on:
+  {% if site.podcast.iheart %}<a href="{{ site.podcast.iheart }}" target="_blank" rel="noopener">iHeart</a>{% endif %}
+  {% if site.podcast.podcastaddict %} · <a href="{{ site.podcast.podcastaddict }}" target="_blank" rel="noopener">Podcast Addict</a>{% endif %}
+  {% if site.podcast.spreaker %} · <a href="{{ site.podcast.spreaker }}" target="_blank" rel="noopener">Spreaker</a>{% endif %}
+  {% if site.podcast.pandora %} · <a href="{{ site.podcast.pandora }}" target="_blank" rel="noopener">Pandora</a>{% endif %}
+  {% if site.podcast.castbox %} · <a href="{{ site.podcast.castbox }}" target="_blank" rel="noopener">Castbox</a>{% endif %}
+  {% if site.podcast.podchaser %} · <a href="{{ site.podcast.podchaser }}" target="_blank" rel="noopener">Podchaser</a>{% endif %}
+</div>
+
   </div>
 </section>
 
