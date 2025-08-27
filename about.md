@@ -9,7 +9,7 @@ permalink: /about/
     <div class="about-main">
       <h1>About MTN.fire</h1>
 
-      <!-- Markdown inside this div will be rendered -->
+      <!-- Write plain Markdown here; it'll be rendered inside this div -->
       <div class="prose" markdown="1">
 
 MTN.fire is where real stories meet the unshakable truth of the Gospel. Each episode blends raw testimony, scripture, and honest conversation — no sugarcoating, no watered-down faith. From the Appalachian mountains to the ends of the earth, this is about carrying the fire of God into everyday life.
