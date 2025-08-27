@@ -1,0 +1,23 @@
+title: MTN.fire
+description: Testimony, fire, and hope from the mountains.
+url: https://mtnfire.org
+baseurl: ""
+author: Matt Culbertson
+timezone: America/New_York
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+markdown: kramdown
+permalink: /:categories/:title/
+
+# Social links for SEO
+social:
+  links:
+    - https://www.facebook.com/MTN.fire86/
+    - https://www.youtube.com/@MTN-fire
+
+# Add your Cloudflare Web Analytics token below (optional)
+cloudflare_analytics_token: ""
