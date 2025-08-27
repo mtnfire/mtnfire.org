@@ -17,6 +17,12 @@
     <nav class="nav">
       <a href="{{ site.baseurl }}/episodes/">Episodes</a>
       <a href="{{ site.baseurl }}/about/">About</a>
+      {% if site.logo_image %}
+  <a href="{{ site.baseurl }}/" class="nav-logo-link" aria-label="{{ site.title }}">
+    <img class="nav-mark" src="{{ site.baseurl }}{{ site.logo_image }}" alt="{{ site.title }} logo">
+  </a>
+{% endif %}
+
     </nav>
   </header>
   <main>
