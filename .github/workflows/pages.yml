@@ -8,7 +8,7 @@ on:
     - cron: "0 12 * * *"  # daily at 12:00 UTC
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
@@ -17,19 +17,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Sanity check so we can see the file is really there
+      - name: Verify script exists
+        run: |
+          pwd
+          ls -la
+          echo "--- scripts dir ---"
+          ls -la scripts || true
+          test -f scripts/import_rss.py
+
       # Import episodes from your RSS feed
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - run: pip install feedparser python-slugify
-      - run: python scripts/import_rss.py
-        env:
-          FEED_URL: ${{ secrets.PODCAST_RSS }}
+      - name: Import podcast RSS
+        run: python scripts/import_rss.py "${{ secrets.PODCAST_RSS }}"
 
       # Build Jekyll
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: "3.2"
           bundler-cache: true
       - run: bundle install
       - run: bundle exec jekyll build -d ./_site
