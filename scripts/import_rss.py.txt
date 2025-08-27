@@ -69,22 +69,34 @@ for e in feed.entries:
     elif e.get("itunes_image"):
         cover = e.itunes_image.get("href", "") if isinstance(e.itunes_image, dict) else e.itunes_image
 
-    # Write front matter
-    fm = []
-    fm.append("---")
-    fm.append("layout: episode")
-    fm.append(f'title: "{title.replace(\'"\', r\'\\\"\')}"')
-    fm.append(f"date: {date_str}")
-    fm.append("categories: [episodes]")
-    if summary: fm.append(f'excerpt: "{summary}"')
-    if dur: fm.append(f'duration: "{dur}"')
-    if audio: fm.append(f'audio_url: "{audio}"')
-    if cover: fm.append(f'cover: "{cover}"')
-    if guid: fm.append(f'guid: "{guid}"')
-    fm.append("---\n")
-    body = "Imported automatically from RSS.\n"
+# Write front matter
+fm = []
+fm.append("---")
+fm.append("layout: episode")
 
-    fn.write_text("\n".join(fm) + body, encoding="utf-8")
-    new_count += 1
+# Use single-quoted YAML strings and double any internal single quotes
+safe_title = title.replace("'", "''")
+fm.append(f"title: '{safe_title}'")
+
+fm.append(f"date: {date_str}")
+fm.append("categories: [episodes]")
+
+if summary:
+    safe_summary = summary.replace("'", "''")
+    fm.append(f"excerpt: '{safe_summary}'")
+if dur:
+    fm.append(f"duration: '{dur}'")
+if audio:
+    fm.append(f"audio_url: '{audio}'")
+if cover:
+    fm.append(f"cover: '{cover}'")
+if guid:
+    fm.append(f"guid: '{guid}'")
+
+fm.append("---\n")
+body = "Imported automatically from RSS.\n"
+
+fn.write_text("\n".join(fm) + body, encoding="utf-8")
+new_count += 1
 
 print(f"Imported {new_count} new episode(s).")
