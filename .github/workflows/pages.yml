@@ -17,7 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Sanity check so we can see the file is really there
       - name: Verify script exists
         run: |
           pwd
@@ -26,15 +25,14 @@ jobs:
           ls -la scripts || true
           test -f scripts/import_rss.py
 
-      # Import episodes from your RSS feed
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
       - run: pip install feedparser python-slugify
+
       - name: Import podcast RSS
         run: python scripts/import_rss.py "${{ secrets.PODCAST_RSS }}"
 
-      # Build Jekyll
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
@@ -42,7 +40,6 @@ jobs:
       - run: bundle install
       - run: bundle exec jekyll build -d ./_site
 
-      # Upload artifact for Pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
