@@ -222,3 +222,14 @@ a:hover{opacity:.8}
   .social-rail{ top: auto; bottom: 14px; right: 14px; transform: none; }
   .social-rail .icon-row{ flex-direction: row; }
 }
+/* Mobile-only floating social rail */
+.social-rail{ display: none; }
+@media (max-width: 820px){
+  .nav-social{ display: none !important; } /* hide header icons on mobile */
+  .social-rail{
+    display: block;
+    position: fixed; right: 14px; bottom: 14px; z-index: 50;
+  }
+  .social-rail .icon-row{ flex-direction: row; gap: 8px; }
+  .social-rail .icon{ width: 34px; height: 34px; border-radius: 10px; }
+}
