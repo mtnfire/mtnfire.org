@@ -240,3 +240,31 @@ a:hover{opacity:.8}
   .nav .icon-row{ display: none !important; }   /* fallback if wrapper not present */
   .social-rail{ display: block !important; }    /* force rail on */
 }
+
+/* About page layout + typography */
+.about .wrap{ max-width: 980px; padding: 36px 20px; }
+.about-wrap{ display: grid; grid-template-columns: 1.4fr .8fr; gap: 32px; }
+.about-main h1{ margin: 0 0 .5rem; letter-spacing: -.01em; }
+
+.prose p{ margin: 1rem 0; }
+.prose a{ text-decoration: underline; text-underline-offset: 2px; }
+.prose ul, .prose ol{ margin: .75rem 0 .75rem 1.25rem; }
+.prose blockquote{
+  margin: 1rem 0; padding: .75rem 1rem; border-left: 3px solid var(--rule);
+  background: rgba(0,0,0,.03); border-radius: 8px;
+}
+
+.about-cta{ margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+.pill.outline{ background: transparent; color: var(--fg); border-color: var(--fg); }
+.pill.outline:hover{ opacity: .9; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+
+.about-aside{ align-self: start; display: grid; gap: 14px; }
+.about-logo{ width: 100%; max-width: 180px; border:1px solid var(--rule); border-radius: 12px; padding: 8px; }
+.about-photo{ width: 100%; border-radius: 12px; border:1px solid var(--rule); }
+
+@media (max-width: 900px){
+  .about-wrap{ grid-template-columns: 1fr; }
+  .about-aside{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .about-logo{ max-width: 100%; }
+}
+
