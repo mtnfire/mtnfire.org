@@ -183,3 +183,10 @@ a:hover{opacity:.8}
 
 /* make sure the nav lays out nicely */
 .nav{ display:flex; align-items:center; gap:18px }
+
+/* Footer socials */
+.site-foot{ border-top:1px solid var(--rule); padding:20px 0; text-align:center }
+.site-foot .icon-row{ justify-content:center }
+.site-foot .icon{ border-color:var(--rule) }
+.site-foot .muted{ margin-top:8px; font-size:.9rem }
+
