@@ -121,13 +121,17 @@ a:hover{opacity:.8}
   .site-head,.site-foot{ border-color:#2a2c2e; }
 }
 
-/* Optional: banner-style crop */
+/* Episode page: tame giant cover images */
 .post-cover{
+  display:block;
   width:100%;
-  max-height:420px;
-  aspect-ratio:16/9;
-  object-fit:cover;     /* crops tall images nicely */
+  height:auto;          /* keep original aspect ratio */
+  max-width:720px;      /* cap size on large screens */
+  margin:16px auto;     /* center the image */
   border-radius:12px;
 }
-.player.big{ max-width:900px; margin:12px auto 0; }
+.player.big{
+  max-width:720px;      /* match the cover width */
+  margin:12px auto 0;
+}
 
