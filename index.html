@@ -5,12 +5,11 @@ title: MTN.fire
 
 {% assign latest = site.posts | where_exp: "p", "p.categories contains 'episodes'" | first %}
 
-<section class="hero hero-pro">
-  <div class="wrap hero-wrap">
+<section class="hero hero-with-logo">
+  <div class="wrap hero-split">
     <div class="hero-left">
-      <span class="eyebrow">A testimony-first podcast</span>
       <h1 class="brand">MTN.fire</h1>
-      <p class="tag">Truth. Fire. Hope.</p>
+      <p class="tag">Testimony. Fire. Hope.</p>
 
       <div class="subs">
         {% if site.podcast.apple %}
@@ -29,26 +28,14 @@ title: MTN.fire
           <a class="pill" href="{{ site.podcast.rss }}" target="_blank" rel="noopener">RSS</a>
         {% endif %}
       </div>
-
-      {% if latest %}
-        <div class="hero-cta">
-          <a class="pill outline" href="{{ latest.url | relative_url }}">▶ Play latest</a>
-          <span class="muted hero-meta">{{ latest.date | date: "%b %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}</span>
-        </div>
-      {% endif %}
     </div>
 
-    {% if latest and latest.cover %}
-      <div class="hero-right">
-        <a class="hero-card" href="{{ latest.url | relative_url }}" aria-label="Open latest episode: {{ latest.title }}">
-          <img src="{{ latest.cover }}" alt="" loading="lazy">
-          <div class="hero-card-badge">Latest episode</div>
-          <div class="hero-card-play">▶</div>
-        </a>
-      </div>
-    {% endif %}
+    <div class="hero-right">
+      <img class="hero-logo" src="{{ site.logo_image | relative_url }}" alt="{{ site.title }} logo" loading="lazy">
+    </div>
   </div>
 </section>
+
 
 <section class="latest">
   <div class="wrap">
