@@ -169,9 +169,17 @@ a.card:hover::after{ opacity:.9; transform:none }
   display:block; width:100%; height:auto;
   max-width:720px; margin:16px auto; border-radius:12px;
 }
+/* Blog/Article reading width + spacing */
+.post .wrap{ max-width: 900px; }           /* narrows the whole article slightly */
+.post-body{ max-width: 720px; margin: 0 auto; }  /* comfy reading line-length */
+.post-head{ margin-bottom: 24px; padding-bottom: 16px; }
+.post-head h1{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin: 0 0 .25rem; }
+
 .player.big{ max-width:720px; margin:12px auto 0 }
 .listen-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
 .pill.small{ padding:8px 12px; font-size:.9rem; border-radius:999px }
+
+
 
 /* ========== About page ========== */
 .about .wrap{ max-width:980px; padding:36px 20px }
