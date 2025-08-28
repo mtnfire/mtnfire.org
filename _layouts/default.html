@@ -28,6 +28,12 @@
     <nav class="nav">
       <a href="{{ '/episodes/' | relative_url }}">Episodes</a>
       <a href="{{ '/about/' | relative_url }}">About</a>
+
+      <!-- Desktop-only socials inline in the header -->
+      <div class="nav-social">
+        {% include social-icons.html %}
+      </div>
+
       {% if site.logo_image %}
         <a href="{{ '/' | relative_url }}" class="nav-logo-link" aria-label="{{ site.title }}">
           <img class="nav-mark" src="{{ site.logo_image | relative_url }}" alt="{{ site.title }} logo">
@@ -36,7 +42,7 @@
     </nav>
   </header>
 
-  <!-- Right-side social rail (keep ONE copy, inside <body>) -->
+  <!-- Mobile-only floating social rail -->
   <div class="social-rail" aria-label="Social links">
     {% include social-icons.html %}
   </div>
