@@ -4,52 +4,58 @@
   <meta charset="utf-8">
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   {% seo %}
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css?v={{ site.time | date: '%s' }}">
+
+  <!-- Favicons -->
+  <link rel="icon" href="{{ '/logo.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="apple-touch-icon" href="{{ '/logo.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+
+  <!-- Main stylesheet (IMPORTANT) -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
   {% include head.html %}
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="site-head">
-    <a class="logo" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <nav class="nav">
-      <a href="{{ site.baseurl }}/episodes/">Episodes</a>
-      <a href="{{ site.baseurl }}/about/">About</a>
-
-      <!-- Desktop-only socials in the header -->
-      <div class="nav-social">
-        {% include social-icons.html %}
-      </div>
-
+      <a href="{{ '/episodes/' | relative_url }}">Episodes</a>
+      <a href="{{ '/about/' | relative_url }}">About</a>
       {% if site.logo_image %}
-        <a href="{{ site.baseurl }}/" class="nav-logo-link" aria-label="{{ site.title }}">
-          <img class="nav-mark" src="{{ site.baseurl }}{{ site.logo_image }}" alt="{{ site.title }} logo" loading="lazy">
+        <a href="{{ '/' | relative_url }}" class="nav-logo-link" aria-label="{{ site.title }}">
+          <img class="nav-mark" src="{{ site.logo_image | relative_url }}" alt="{{ site.title }} logo">
         </a>
       {% endif %}
     </nav>
   </header>
 
-  <!-- Mobile-only floating rail (kept outside the header/nav) -->
+  <!-- Right-side social rail (keep ONE copy, inside <body>) -->
   <div class="social-rail" aria-label="Social links">
     {% include social-icons.html %}
   </div>
 
-  <main>
+  <main id="main">
     {{ content }}
   </main>
 
   <footer class="site-foot">
     <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
   </footer>
-  <script>
-(function(){
-  const head = document.querySelector('.site-head');
-  const onScroll = () => head && head.classList.toggle('is-stuck', window.scrollY > 4);
-  onScroll(); addEventListener('scroll', onScroll, {passive:true});
-})();
-</script>
 
+  <script>
+    // Sticky header shadow
+    (function(){
+      const head = document.querySelector('.site-head');
+      const onScroll = () => head && head.classList.toggle('is-stuck', window.scrollY > 4);
+      onScroll(); addEventListener('scroll', onScroll, {passive:true});
+    })();
+  </script>
 </body>
 </html>
