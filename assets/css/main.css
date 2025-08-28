@@ -294,3 +294,61 @@ button.pill{
   border-bottom: 0;
   padding-bottom: 24px; /* tighten space a bit */
 }
+
+/* --- Hero layout polish: tighter desktop, centered mobile --- */
+.hero{
+  /* reduce vertical emptiness on desktop */
+  padding: clamp(44px, 6vw, 72px) 0 32px;
+}
+
+/* keep the grid nice and balanced */
+.hero-with-logo .wrap{
+  max-width: 1040px; /* a touch wider than before */
+}
+
+/* two columns on desktop, tighter gap */
+.hero-split{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: clamp(16px, 3vw, 32px);
+}
+
+/* headline + tag rhythm */
+.hero-left .brand{
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  margin: 0 0 .3rem;
+}
+.hero-left .tag{
+  margin: .2rem 0 .9rem;
+}
+
+/* logo sizing/position */
+.hero-right{
+  display: flex;
+  justify-content: center;
+}
+.hero-logo{
+  width: min(260px, 32vw);   /* a touch larger so the hero feels balanced */
+  height: auto;
+}
+
+/* Mobile: center everything and stack nicely */
+@media (max-width: 900px){
+  .hero-split{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hero-with-logo .wrap{
+    text-align: center;
+  }
+  .hero-left{
+    text-align: center;
+  }
+  .hero-left .subs{
+    justify-content: center; /* center the icon row */
+  }
+  .hero-logo{
+    width: 160px; /* comfortable size on phones */
+  }
+}
