@@ -6,31 +6,25 @@ layout: default
     <header class="post-head">
       <h1>{{ page.title }}</h1>
       <p class="muted">{{ page.date | date: "%B %-d, %Y" }}</p>
-      {% if page.cover %}<img class="post-cover" src="{{ page.cover }}" alt="">{% endif %}
+      {% if page.cover %}
+        <img class="post-cover" src="{{ page.cover }}" alt="{{ page.title }} cover">
+      {% endif %}
     </header>
 
     <div class="post-body prose">
       {{ content }}
     </div>
 
+    <!-- Unified share button (same behavior as episodes) -->
     <div class="share-row">
-      <button class="pill outline" id="copy-link">Copy link</button>
-      <a class="pill outline" href="https://x.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Share on X</a>
-      <a class="pill outline" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Facebook</a>
+      <button
+        class="pill outline share-btn"
+        type="button"
+        data-title="{{ page.title | escape }}"
+        data-url="{{ page.url | absolute_url }}"
+      >
+        Share
+      </button>
     </div>
   </div>
-
-  <script>
-    (function(){
-      const b = document.getElementById('copy-link');
-      if (!b) return;
-      b.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(location.href);
-          b.textContent = 'Copied!';
-          setTimeout(() => b.textContent = 'Copy link', 1500);
-        } catch(e){ b.textContent = 'Press Ctrl/Cmd+C'; }
-      });
-    })();
-  </script>
 </article>
