@@ -1,84 +1,65 @@
 ---
 layout: default
 ---
-<article class="post episode-detail">
-  <header class="post-head">
-    <div class="meta">
-      <h1>{{ page.title }}</h1>
-      <p class="muted">
+
+<section class="ep">
+  <!-- Hero (cover + title/meta/player) -->
+  <div class="wrap ep-hero">
+    {% if page.cover %}
+      <div class="ep-cover">
+        <img src="{{ page.cover }}" alt="Episode cover for {{ page.title }}">
+      </div>
+    {% endif %}
+
+    <div class="ep-head">
+      <h1 class="ep-title">{{ page.title }}</h1>
+
+      <p class="ep-meta muted">
         {{ page.date | date: "%B %-d, %Y" }}
         {% if page.duration %} · {{ page.duration }}{% endif %}
-        {% if page.season or page.itunes_season or page.episode_number or page.itunes_episode %}
-          · S{{ page.season | default: page.itunes_season }}{% if page.episode_number or page.itunes_episode %}E{{ page.episode_number | default: page.itunes_episode }}{% endif %}
-        {% endif %}
+        {% assign s = page.season | default: page.itunes_season %}
+        {% assign e = page.episode | default: page.itunes_episode %}
+        {% if s %} · S{{ s }}{% endif %}
+        {% if e %} · EP {{ e }}{% endif %}
       </p>
+
+      {% if page.audio_url %}
+        <audio class="ep-audio" controls preload="none" src="{{ page.audio_url }}"></audio>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Body (full description + share / platforms) -->
+  <div class="wrap ep-body">
+    {% comment %}
+      Prefer full content. Strip the old placeholder if it exists.
+      Fallback to description/excerpt if content is empty.
+    {% endcomment %}
+    {% assign cleaned = content | replace: 'Imported automatically from RSS.', '' | strip %}
+    {% if cleaned == '' %}
+      {% assign cleaned = page.description | default: page.excerpt | default: '' %}
+    {% endif %}
+
+    <div class="prose ep-prose">
+      {{ cleaned | markdownify }}
     </div>
 
-    {% if page.cover %}
-      <img class="post-cover small" src="{{ page.cover }}" alt="">
-    {% endif %}
-  </header>
+    <div class="ep-actions">
+      <div class="share-row">
+        <button class="pill outline" onclick="navigator.clipboard.writeText(location.href)">Copy link</button>
+        <a class="pill outline" href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | uri_escape }}&text={{ page.title | uri_escape }}" target="_blank" rel="noopener">Share on X</a>
+        <a class="pill outline" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Facebook</a>
+      </div>
 
-  {% if page.audio_url %}
-  <div class="player big">
-    <audio controls preload="none" src="{{ page.audio_url }}"></audio>
-  </div>
-  {% endif %}
-
-  {%- comment -%}
-    Build the description from best available fields, in order:
-    1) description_html (raw HTML saved by importer)
-    2) description (plain text)
-    3) summary (plain text)
-    4) excerpt (front-matter override)
-    5) page.content (body of the file)
-    Always strip the old placeholder text if present.
-  {%- endcomment -%}
-  {% assign placeholder = 'Imported automatically from RSS.' %}
-
-  {% assign best = page.description_html %}
-  {% if best == nil or best == '' %}
-    {% assign best = page.description %}
-  {% endif %}
-  {% if best == nil or best == '' %}
-    {% assign best = page.summary %}
-  {% endif %}
-  {% if best == nil or best == '' %}
-    {% assign best = page.excerpt %}
-  {% endif %}
-  {% if best == nil or best == '' %}
-    {% assign best = page.content %}
-  {% endif %}
-
-  {% assign best = best | replace: placeholder, '' | strip %}
-
-  <div class="post-body prose">
-    {% if best and best != '' %}
-      {% if best contains '<' %}
-        {{ best }}
-      {% else %}
-        {{ best | markdownify }}
+      {% if site.podcast %}
+      <div class="platforms" style="margin-top:10px">
+        {% if site.podcast.spotify %}<a class="icon" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener" aria-label="Spotify"><span class="sr-only">Spotify</span>🎧</a>{% endif %}
+        {% if site.podcast.apple %}<a class="icon" href="{{ site.podcast.apple }}" target="_blank" rel="noopener" aria-label="Apple Podcasts"><span class="sr-only">Apple Podcasts</span></a>{% endif %}
+        {% if site.podcast.amazon %}<a class="icon" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener" aria-label="Amazon Music"><span class="sr-only">Amazon</span>🅰️</a>{% endif %}
+        {% if site.podcast.youtube %}<a class="icon" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener" aria-label="YouTube Music"><span class="sr-only">YouTube</span>▶️</a>{% endif %}
+        {% if site.podcast.rss %}<a class="icon" href="{{ site.podcast.rss }}" target="_blank" rel="noopener" aria-label="RSS"><span class="sr-only">RSS</span>📰</a>{% endif %}
+      </div>
       {% endif %}
-    {% endif %}
+    </div>
   </div>
-
-  <div class="share-row">
-    <button class="pill outline" id="copylink" type="button">Copy link</button>
-    <a class="pill outline" href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | uri_escape }}&text={{ page.title | uri_escape }}" target="_blank" rel="noopener">Share on X</a>
-    <a class="pill outline" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Facebook</a>
-  </div>
-</article>
-
-<script>
-(function(){
-  const btn = document.getElementById('copylink');
-  if(!btn) return;
-  btn.addEventListener('click', async () => {
-    try{
-      await navigator.clipboard.writeText('{{ page.url | absolute_url }}');
-      btn.textContent = 'Copied!';
-      setTimeout(()=>btn.textContent='Copy link', 1200);
-    }catch(_){}
-  });
-})();
-</script>
+</section>
