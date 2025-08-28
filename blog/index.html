@@ -1,0 +1,29 @@
+---
+layout: default
+title: Blog
+permalink: /blog/
+---
+
+<section class="grid">
+  <div class="wrap">
+    <h1 class="section-title">Blog</h1>
+
+    <div class="cards">
+      {% assign posts = site.posts | where_exp: "p", "p.categories contains 'blog'" %}
+      {% if posts.size > 0 %}
+        {% for post in posts %}
+          <a class="card" href="{{ post.url | relative_url }}">
+            {% if post.cover %}<img src="{{ post.cover }}" alt="">{% endif %}
+            <div class="card-body">
+              <h3>{{ post.title }}</h3>
+              <p class="muted">{{ post.date | date: "%b %-d, %Y" }}</p>
+              <p class="line-clamp">{{ post.excerpt }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p class="muted">No blog posts yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
