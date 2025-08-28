@@ -65,5 +65,33 @@
       onScroll(); addEventListener('scroll', onScroll, { passive: true });
     })();
   </script>
+  <script>
+  // Toggle "Show more / Show less" for the latest-episode description on the home page
+  (function () {
+    function wireLatestToggle() {
+      const det = document.getElementById('latest-more');
+      if (!det) return; // This page doesn't have the latest-episode block
+
+      const shortP = document.querySelector('.latest-short');
+      const label  = det.querySelector('.toggle-label');
+
+      function update() {
+        const open = det.open;
+        if (label) label.textContent = open ? 'Show less' : 'Show more';
+        if (shortP) shortP.style.display = open ? 'none' : '';
+      }
+
+      det.addEventListener('toggle', update);
+      update();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wireLatestToggle);
+    } else {
+      wireLatestToggle();
+    }
+  })();
+</script>
+
 </body>
 </html>
