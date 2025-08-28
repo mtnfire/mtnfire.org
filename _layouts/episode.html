@@ -19,15 +19,40 @@ layout: default
     {% endif %}
   </header>
 
+  {% if page.audio_url %}
   <div class="player big">
-    {% if page.audio_url %}
-      <audio controls preload="none" src="{{ page.audio_url }}"></audio>
-    {% endif %}
+    <audio controls preload="none" src="{{ page.audio_url }}"></audio>
   </div>
+  {% endif %}
+
+  {% comment %}
+    Choose the best available body:
+    1) description_html from the importer
+    2) content, minus the placeholder
+    3) excerpt (or description/summary) as a fallback
+  {% endcomment %}
+  {% assign body_html = page.description_html %}
+  {% if body_html == nil or body_html == '' %}
+    {% assign cleaned = content | replace: 'Imported automatically from RSS.', '' | strip %}
+    {% if cleaned != '' %}
+      {% assign body_html = cleaned %}
+    {% endif %}
+  {% endif %}
+  {% if body_html == nil or body_html == '' %}
+    {% assign fallback = page.excerpt | default: page.description | default: page.summary | strip %}
+    {% if fallback != '' %}
+      {% assign body_html = fallback %}
+    {% endif %}
+  {% endif %}
 
   <div class="post-body prose">
-    {%- assign clean = content | replace: 'Imported automatically from RSS.', '' -%}
-    {{ clean }}
+    {% if body_html %}
+      {% if body_html contains '<' %}
+        {{ body_html }}
+      {% else %}
+        <p>{{ body_html }}</p>
+      {% endif %}
+    {% endif %}
   </div>
 
   <div class="share-row">
@@ -45,8 +70,8 @@ layout: default
     try{
       await navigator.clipboard.writeText('{{ page.url | absolute_url }}');
       btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = 'Copy link', 1200);
-    }catch(e){}
+      setTimeout(()=>btn.textContent='Copy link', 1200);
+    }catch(_){}
   });
 })();
 </script>
