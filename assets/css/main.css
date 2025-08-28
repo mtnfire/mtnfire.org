@@ -352,3 +352,26 @@ button.pill{
     width: 160px; /* comfortable size on phones */
   }
 }
+/* Keep header sticky and above the page chrome (iOS friendly) */
+.site-head{
+  position: sticky;
+  top: 0;
+  z-index: 999; /* above rails/cards */
+}
+
+/* Mobile: show episode cover ABOVE text/player in the Latest block */
+@media (max-width: 820px){
+  .feature{
+    display: flex;              /* override the grid for simple ordering */
+    flex-direction: column;
+    gap: 14px;
+  }
+  .feature-cover{
+    order: -1;                  /* put the image first */
+    width: 100%;
+    border-radius: 12px;
+  }
+  .feature-info{
+    order: 0;
+  }
+}
