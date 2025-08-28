@@ -47,7 +47,7 @@ permalink: /episodes/
             {%- endif -%}
             <a class="card episode-card"
                href="{{ post.url | relative_url }}"
-               data-text="{{ post.title | downcase | escape }} {{ summary | downcase | escape }}">
+               data-text="{{ post.title | downcase | escape }} {{ summary | downcase | escape }} s{{ post.season | default: post.itunes_season | default: '' }} ep {{ post.episode | default: '' }}">
               {% if post.cover %}<img loading="lazy" src="{{ post.cover }}" alt="">{% endif %}
               <div class="card-body">
                 <h3>{{ post.title }}</h3>
@@ -57,6 +57,7 @@ permalink: /episodes/
                   {% if post.season or post.itunes_season %}
                     · S{% if post.season %}{{ post.season }}{% else %}{{ post.itunes_season }}{% endif %}
                   {% endif %}
+                  {% if post.episode %} · Ep {{ post.episode }}{% endif %}
                 </p>
                 <p class="line-clamp">{{ summary }}</p>
               </div>
