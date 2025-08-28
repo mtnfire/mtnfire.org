@@ -32,7 +32,27 @@ title: MTN.fire
           <p class="muted">
             {{ latest.date | date: "%B %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}
           </p>
-          <p>{{ latest.excerpt }}</p>
+         {%- assign full_html = latest.content | markdownify -%}
+{%- assign short_text = latest.excerpt | strip_html | strip -%}
+{%- if short_text == "" -%}
+  {%- assign short_text = full_html | strip_html | strip | truncate: 220 -%}
+{%- endif -%}
+{%- assign full_plain = full_html | strip_html | strip -%}
+{%- assign short_len = short_text | size -%}
+{%- assign full_len = full_plain | size -%}
+{%- assign show_toggle = full_len > short_len -%}
+
+<div class="ep-desc" data-state="short">
+  <p class="desc-short">{{ short_text }}</p>
+  <div class="desc-full" hidden>
+    {{ full_html }}
+  </div>
+  {% if show_toggle %}
+    <button class="pill outline small show-more" type="button"
+            data-more="Read more" data-less="Show less">Read more</button>
+  {% endif %}
+</div>
+
 
           <div class="player">
             {% if latest.audio_url %}
@@ -54,3 +74,23 @@ title: MTN.fire
     {% endif %}
   </div>
 </section>
+<script>
+(function(){
+  const box = document.querySelector('.ep-desc');
+  if(!box) return;
+  const btn  = box.querySelector('.show-more');
+  const full = box.querySelector('.desc-full');
+  if(!btn || !full) return;
+
+  btn.addEventListener('click', () => {
+    const expanded = !full.hasAttribute('hidden');
+    if (expanded) {
+      full.setAttribute('hidden','');
+      btn.textContent = btn.dataset.more || 'Read more';
+    } else {
+      full.removeAttribute('hidden');
+      btn.textContent = btn.dataset.less || 'Show less';
+    }
+  });
+})();
+</script>
