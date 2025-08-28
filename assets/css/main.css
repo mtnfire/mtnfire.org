@@ -271,3 +271,20 @@ a:hover{opacity:.8}
 /* Share buttons */
 .share-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
 
+/* Make <button class="pill"> match <a class="pill"> */
+.share-row .pill{
+  display: inline-flex;           /* same box model for both */
+  align-items: center;
+  justify-content: center;
+  line-height: 1;                 /* kill UA differences */
+}
+
+button.pill{
+  appearance: none;               /* reset native button styles */
+  -webkit-appearance: none;
+  font: inherit;
+  font-weight: 600;
+  padding: 10px 14px;             /* ensure same padding */
+  border-radius: 999px;
+  border-width: 1px;              /* match link pills */
+}
