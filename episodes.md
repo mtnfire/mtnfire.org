@@ -1,100 +1,124 @@
----
-layout: default
-title: Episodes
-permalink: /episodes/
----
+import os, re, sys
+from datetime import datetime
+from pathlib import Path
 
-<!-- Raw HTML inside Markdown is fine in Jekyll -->
-<section class="episodes">
-  <div class="wrap">
-    <h1 class="section-title">Episodes</h1>
+import feedparser
+from slugify import slugify  # from python-slugify
 
-    <!-- Filter bar -->
-    <div class="filter-bar">
-      <input id="ep-search" type="search" placeholder="Search episodes…" aria-label="Search episodes">
-      <div class="spacer"></div>
-      <button id="expand-all" class="pill outline" type="button">Expand all</button>
-      <button id="collapse-all" class="pill outline" type="button">Collapse all</button>
-    </div>
+FEED = (
+    os.environ.get("FEED_URL")
+    or os.environ.get("PODCAST_RSS")
+    or (sys.argv[1] if len(sys.argv) > 1 else None)
+)
+if not FEED:
+    raise SystemExit("No FEED_URL/PODCAST_RSS provided")
 
-    {%- assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" -%}
-    {%- assign eps_sorted = eps | sort: "date" | reverse -%}
+posts_dir = Path("_posts")
+posts_dir.mkdir(exist_ok=True)
 
-    {%- comment -%}
-      Group by season: prefer p.season, then p.itunes_season (from RSS), else 0 ("Other")
-    {%- endcomment -%}
-    {%- assign groups = eps_sorted
-        | group_by_exp: "p", "p.season | default: p.itunes_season | default: 0 | plus: 0"
-      -%}
-    {%- assign groups_desc = groups | sort: "name" | reverse -%}
+# Track existing GUIDs so we don't duplicate
+existing_guids = set()
+for p in posts_dir.glob("*.md"):
+    text = p.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r'^guid:\s*"?(.+?)"?\s*$', text, re.M)
+    if m:
+        existing_guids.add(m.group(1).strip())
 
-    {%- for g in groups_desc -%}
-      {%- assign label = g.name -%}
-      {%- if g.name == 0 -%}{% assign label = "Other" %}{% endif -%}
+feed = feedparser.parse(FEED)
+new_count = 0
 
-      <details class="season" data-season="{{ g.name }}" {% if forloop.first and g.name != 0 %}open{% endif %}>
-        <summary>
-          <span class="season-title">{% if g.name == 0 %}Other{% else %}Season {{ g.name }}{% endif %}</span>
-          <span class="muted">({{ g.items | size }} episodes)</span>
-        </summary>
+for e in feed.entries:
+    guid = e.get("id") or e.get("guid") or e.get("link")
+    if guid and guid in existing_guids:
+        continue
 
-        <div class="cards">
-          {%- assign items = g.items | sort: "date" | reverse -%}
-          {%- for post in items -%}
-            {%- assign summary = post.excerpt | strip_html | strip -%}
-            {%- if summary == "" -%}
-              {%- assign summary = post.content | markdownify | strip_html | strip | truncate: 180 -%}
-            {%- endif -%}
-            <a class="card episode-card"
-               href="{{ post.url | relative_url }}"
-               data-text="{{ post.title | downcase | escape }} {{ summary | downcase | escape }} s{{ post.season | default: post.itunes_season | default: '' }} ep {{ post.episode | default: '' }}">
-              {% if post.cover %}<img loading="lazy" src="{{ post.cover }}" alt="">{% endif %}
-              <div class="card-body">
-                <h3>{{ post.title }}</h3>
-                <p class="muted">
-                  {{ post.date | date: "%b %-d, %Y" }}
-                  {% if post.duration %} · {{ post.duration }}{% endif %}
-                  {% if post.season or post.itunes_season %}
-                    · S{% if post.season %}{{ post.season }}{% else %}{{ post.itunes_season }}{% endif %}
-                  {% endif %}
-                  {% if post.episode %} · Ep {{ post.episode }}{% endif %}
-                </p>
-                <p class="line-clamp">{{ summary }}</p>
-              </div>
-            </a>
-          {%- endfor -%}
-        </div>
-      </details>
-    {%- endfor -%}
-  </div>
-</section>
+    title = e.get("title", "Episode")
 
-<script>
-  (function(){
-    const q = document.getElementById('ep-search');
-    const seasons = Array.from(document.querySelectorAll('.season'));
-    const btnExpand = document.getElementById('expand-all');
-    const btnCollapse = document.getElementById('collapse-all');
+    # Date handling
+    if e.get("published_parsed"):
+        from time import mktime
+        dt = datetime.fromtimestamp(mktime(e.published_parsed))
+    elif e.get("updated_parsed"):
+        from time import mktime
+        dt = datetime.fromtimestamp(mktime(e.updated_parsed))
+    else:
+        dt = datetime.utcnow()
+    date_str = dt.strftime("%Y-%m-%d")
 
-    function applySearch(){
-      const term = (q.value || "").trim().toLowerCase();
-      seasons.forEach(sec => {
-        let anyVisible = false;
-        const cards = sec.querySelectorAll('.episode-card');
-        cards.forEach(card => {
-          const text = (card.dataset.text || "");
-          const match = !term || text.includes(term);
-          card.style.display = match ? "" : "none";
-          if (match) anyVisible = true;
-        });
-        sec.style.display = anyVisible ? "" : "none";
-        if (term && anyVisible) sec.open = true; // open sections that have matches
-      });
-    }
+    # File name
+    slug = slugify(title)[:60] or "episode"
+    fn = posts_dir / f"{date_str}-{slug}.md"
+    if fn.exists():
+        continue
 
-    q.addEventListener('input', applySearch);
+    # Audio enclosure
+    audio = ""
+    if e.get("links"):
+        for l in e.links:
+            if l.get("rel") == "enclosure":
+                audio = l.get("href", "")
+                break
+    if not audio and e.get("enclosures"):
+        audio = e.enclosures[0].get("href", "")
 
-    btnExpand?.addEventListener('click', () => { seasons.forEach(sec => sec.open = true); });
-    btnCollapse?.addEventListener('click', () => { seasons.forEach(sec => sec.open = false); });
-  })();
-</script>
+    # Duration + summaries
+    dur = e.get("itunes_duration") or ""
+
+    # Short summary (excerpt)
+    summary = re.sub(r"<.*?>", "", e.get("summary", "")).strip()
+    if summary:
+        summary = re.sub(r"\s+", " ", summary)[:180]
+
+    # FULL summary for "Read more" (NEW)
+    raw_full = e.get("summary") or e.get("description") or ""
+    summary_full = re.sub(r"<.*?>", "", raw_full)
+    summary_full = re.sub(r"\s+", " ", summary_full).strip()
+
+    # Cover (episode-level first)
+    cover = ""
+    if "image" in e and isinstance(e.image, dict):
+        cover = e.image.get("href", "")
+    elif e.get("itunes_image"):
+        cover = e.itunes_image.get("href", "") if isinstance(e.itunes_image, dict) else e.itunes_image
+
+    # Fallback to feed-level image
+    if not cover:
+        ff = getattr(feed, "feed", {})
+        if isinstance(getattr(feed, "image", None), dict):
+            cover = feed.image.get("href", "") or feed.image.get("url", "")
+        elif isinstance(ff.get("image"), dict):
+            cover = ff["image"].get("href", "") or ff["image"].get("url", "")
+        elif ff.get("itunes_image"):
+            im = ff["itunes_image"]
+            cover = im.get("href", "") if isinstance(im, dict) else im
+
+    # Write front matter (safe single-quoted YAML)
+    fm = []
+    fm.append("---")
+    fm.append("layout: episode")
+    safe_title = title.replace("'", "''")
+    fm.append(f"title: '{safe_title}'")
+    fm.append(f"date: {date_str}")
+    fm.append("categories: [episodes]")
+    if summary:
+        safe_summary = summary.replace("'", "''")
+        fm.append(f"excerpt: '{safe_summary}'")
+    # NEW: store full description for homepage toggle
+    if summary_full:
+        safe_full = summary_full.replace("'", "''")
+        fm.append(f"summary_full: '{safe_full}'")
+    if dur:
+        fm.append(f"duration: '{dur}'")
+    if audio:
+        fm.append(f"audio_url: '{audio}'")
+    if cover:
+        fm.append(f"cover: '{cover}'")
+    if guid:
+        fm.append(f"guid: '{guid}'")
+    fm.append("---\n")
+    body = "Imported automatically from RSS.\n"
+
+    fn.write_text("\n".join(fm) + body, encoding="utf-8")
+    new_count += 1
+
+print(f"Imported {new_count} new episode(s).")
