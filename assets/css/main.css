@@ -336,3 +336,16 @@ a.card:hover::after{ opacity: .9; transform: none; }
 .nf{ padding: clamp(64px,8vw,96px) 0 96px; text-align:center }
 .nf h1{ margin:0 0 .5rem; letter-spacing:-.01em; font-size:clamp(1.8rem,4vw,2.4rem) }
 .nf .btns{ margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
+
+/* Visually hide skip link; show only when tabbed */
+.skip-link{
+  position:absolute; left:-9999px; top:auto;
+  width:1px; height:1px; overflow:hidden;
+}
+.skip-link:focus-visible{
+  left:16px; top:16px; width:auto; height:auto;
+  padding:8px 12px; border:1px solid var(--rule);
+  border-radius:8px; background:var(--bg); color:var(--fg);
+  z-index:1000; box-shadow:0 6px 16px rgba(0,0,0,.08);
+  outline:none;
+}
