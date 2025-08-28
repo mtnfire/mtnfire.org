@@ -509,3 +509,23 @@ button.pill{
 }
 .more summary::-webkit-details-marker { display: none; }
 .more summary .toggle-label { text-decoration: underline; }
+
+
+/* Episode detail layout polish */
+.episode-detail .post-head{
+  display:grid;
+  grid-template-columns: minmax(0,1.2fr) minmax(220px,.8fr);
+  align-items:center;
+  gap:24px;
+}
+.post-cover.small{
+  max-width:360px;
+  margin:0 auto;
+  border-radius:12px;
+}
+@media (max-width:820px){
+  .episode-detail .post-head{ grid-template-columns:1fr; }
+  .post-cover.small{ max-width:220px; }
+}
+.prose{ max-width:70ch; }
+.prose p{ margin:1rem 0; }
