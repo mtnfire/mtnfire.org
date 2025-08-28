@@ -239,3 +239,14 @@ button.pill{
   .site-head,.site-foot{ border-color:#2a2c2e }
   .social-rail .icon{ background:rgba(255,255,255,.08) }
 }
+
+/* Mobile: keep the header always visible */
+@media (max-width: 820px){
+  :root{ --head-h: 60px; }                  /* header height */
+  body{ padding-top: var(--head-h); }       /* space for the fixed header */
+  .site-head{
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--head-h);
+    padding: 12px 16px;                     /* a bit tighter on phones */
+  }
+}
