@@ -107,6 +107,17 @@ img{ max-width:100%; display:block }
   .hero-logo{ width:160px }
 }
 
+/* Kill the faint box behind the hero logo */
+.hero-logo{
+  background-color: var(--bg);   /* matches light/dark theme */
+  /* optional: if you want it a touch darker in dark mode, use this instead: */
+  /* background-color: #0f0f10; */
+}
+
+/* If you ever notice a halo on the PNG edges, this helps too */
+.hero-logo{ image-rendering: -webkit-optimize-contrast; }
+
+
 /* Platform icons in hero */
 .platforms{
   display:flex; gap:10px; flex-wrap:wrap;
