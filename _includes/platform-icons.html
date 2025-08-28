@@ -1,0 +1,51 @@
+<div class="platforms" aria-label="Listen on">
+  {% if site.podcast.apple %}
+  <a class="icon" href="{{ site.podcast.apple }}" target="_blank" rel="noopener" aria-label="Apple Podcasts">
+    <!-- Apple Podcasts (generic apple) -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M16.7 13.8c-.5 1.2-.8 1.8-1.6 2.9-.7 1-1.6 2.2-2.8 2.2s-1.7-.7-3.2-.7-1.9.7-3 .7c-1.1 0-1.9-1.1-2.6-2.1C2.4 15.1 2 12.9 3 11c.9-1.7 2.5-2.8 4-2.8 1.2 0 2 .7 3 .7s1.7-.7 3-.7c.9 0 1.8.3 2.6 1-1 .6-1.8 1.6-1.9 2.6.9.1 1.8.4 2.7 1zM14.9 3.5c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.6.7-1 1.7-.9 2.6.9 0 1.9-.6 2.5-1.3z"/>
+    </svg>
+    <span class="sr-only">Apple Podcasts</span>
+  </a>
+  {% endif %}
+
+  {% if site.podcast.spotify %}
+  <a class="icon" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener" aria-label="Spotify">
+    <!-- Spotify -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm4.3 14.6a.75.75 0 0 1-1.03.27c-2.82-1.73-6.37-2.12-10.53-1.17a.75.75 0 0 1-.33-1.45c4.5-1.04 8.4-.6 11.56 1.31.36.22.48.69.27 1.04zM16.9 12a.9.9 0 0 1-1.26.32c-2.46-1.49-6.21-1.92-9.13-1.06a.9.9 0 1 1-.5-1.73c3.33-.95 7.5-.47 10.35 1.24.42.25.56.79.32 1.23zM16.5 9a1 1 0 0 1-1.4.36c-2.12-1.29-5.34-1.6-8.04-.88a1 1 0 0 1-.5-1.94c3.2-.83 6.85-.48 9.4 1.05.47.28.62.9.35 1.41z"/>
+    </svg>
+    <span class="sr-only">Spotify</span>
+  </a>
+  {% endif %}
+
+  {% if site.podcast.amazon %}
+  <a class="icon" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener" aria-label="Amazon Music">
+    <!-- simple music note -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M15 3v11.2a3.2 3.2 0 1 1-1.5-2.7V6.2l-5 1.3v7.7a3.2 3.2 0 1 1-1.5-2.7V5l8-2z"/>
+    </svg>
+    <span class="sr-only">Amazon Music</span>
+  </a>
+  {% endif %}
+
+  {% if site.podcast.youtube %}
+  <a class="icon" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener" aria-label="YouTube Music">
+    <!-- YouTube -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M23.5 6.2a4 4 0 0 0-2.8-2.8C18.7 3 12 3 12 3s-6.7 0-8.7.4A4 4 0 0 0 .5 6.2 41 41 0 0 0 0 12a41 41 0 0 0 .5 5.8 4 4 0 0 0 2.8 2.8C5.3 21 12 21 12 21s6.7 0 8.7-.4a4 4 0 0 0 2.8-2.8A41 41 0 0 0 24 12a41 41 0 0 0-.5-5.8zM9.8 15.5V8.5l6.1 3.5-6.1 3.5z"/>
+    </svg>
+    <span class="sr-only">YouTube</span>
+  </a>
+  {% endif %}
+
+  {% if site.podcast.rss %}
+  <a class="icon" href="{{ site.podcast.rss }}" target="_blank" rel="noopener" aria-label="RSS">
+    <!-- RSS -->
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-3-6v3a8 8 0 0 1 8 8h3c0-6.1-4.9-11-11-11zm0-5v3c9.4 0 17 7.6 17 17h3C22 9.4 12.6 0 2 0z"/>
+    </svg>
+    <span class="sr-only">RSS</span>
+  </a>
+  {% endif %}
+</div>
