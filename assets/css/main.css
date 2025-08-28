@@ -354,3 +354,36 @@ button.pill{
 @media (min-width: 821px){
   .site-head{ height:auto; padding:16px 20px; }
 }
+/* Episodes page: season accordions */
+.season{
+  margin: 12px 0 20px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--bg);
+  padding: 6px 10px;
+}
+.season > summary{
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 600;
+}
+.season > summary::-webkit-details-marker{ display:none }
+.season[open]{ padding-bottom: 12px; }
+.season .cards{ margin-top: 12px; }
+
+/* Filter bar */
+.filter-bar{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  margin: 12px 0 8px;
+}
+.filter-bar .spacer{ flex: 1 1 auto; }
+.filter-bar input[type="search"],
+.filter-bar select{
+  padding:10px 12px; border:1px solid var(--rule);
+  border-radius:10px; background:var(--bg); color:var(--fg);
+  font:inherit;
+}
+.filter-bar button.pill.outline{ padding: 8px 12px; }
