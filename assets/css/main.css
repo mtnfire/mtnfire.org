@@ -417,3 +417,47 @@ button.pill{
   font:inherit;
 }
 .filter-bar button.pill.outline{ padding: 8px 12px; }
+
+/* --- Hero alignment cleanup --- */
+
+/* Make the left side a simple vertical stack with consistent gaps */
+.hero-left{
+  display: grid;
+  grid-auto-rows: max-content;
+  row-gap: 10px;                /* even spacing between title, tag, icons */
+  justify-items: start;         /* align to the left on desktop */
+}
+
+@media (max-width: 900px){
+  .hero-left{ justify-items: center; }  /* center the stack on phones */
+}
+
+/* Kill the default margins so the gap above controls spacing */
+.hero-left .brand{
+  margin: 0;
+  line-height: 1.1;             /* keeps big text from looking loose */
+}
+.hero-left .tag{
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Icon row rhythm + consistent hit area */
+.platforms{
+  margin-top: 2px;              /* tiny nudge so it hugs the tag nicely */
+  gap: 12px;                    /* a hair more breathing room between icons */
+  justify-content: flex-start;  /* align with headline left edge on desktop */
+}
+@media (max-width: 900px){
+  .platforms{ justify-content: center; }
+}
+
+/* Normalize icon buttons so they feel perfectly even */
+.platforms .icon{
+  width: 42px; height: 42px;    /* same size for each circle */
+  display: grid; place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  line-height: 1;               /* avoid stray vertical centering quirks */
+}
+.platforms .icon svg{ width: 18px; height: 18px; }
