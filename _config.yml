@@ -4,8 +4,8 @@ author: "Matt Culbertson"
 timezone: America/New_York
 
 # Preview values (GitHub Pages preview)
-url: https://mtnfire.github.io
-baseurl: /mtnfire.org
+url: https://mtnfire.org
+baseurl: ""
 # When you move to your domain, switch to:
 # url: https://mtnfire.org
 # baseurl: ""
