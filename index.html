@@ -3,35 +3,56 @@ layout: default
 title: MTN.fire
 ---
 
-<section class="hero">
-  <div class="wrap">
-    <h1 class="brand">MTN.fire</h1>
-    <p class="tag">Testimony. Fire. Hope.</p>
-   <div class="subs">
-  {% if site.podcast.apple %}
-    <a class="pill" href="{{ site.podcast.apple }}" target="_blank" rel="noopener">Apple Podcasts</a>
-  {% endif %}
-  {% if site.podcast.spotify %}
-    <a class="pill" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener">Spotify</a>
-  {% endif %}
-  {% if site.podcast.amazon %}
-    <a class="pill" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener">Amazon</a>
-  {% endif %}
-  {% if site.podcast.youtube %}
-    <a class="pill" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener">YouTube</a>
-  {% endif %}
-  {% if site.podcast.rss %}
-    <a class="pill" href="{{ site.podcast.rss }}" target="_blank" rel="noopener">RSS</a>
-  {% endif %}
-</div>
+{% assign latest = site.posts | where_exp: "p", "p.categories contains 'episodes'" | first %}
 
+<section class="hero hero-pro">
+  <div class="wrap hero-wrap">
+    <div class="hero-left">
+      <span class="eyebrow">A testimony-first podcast</span>
+      <h1 class="brand">MTN.fire</h1>
+      <p class="tag">Testimony. Fire. Hope.</p>
+
+      <div class="subs">
+        {% if site.podcast.apple %}
+          <a class="pill" href="{{ site.podcast.apple }}" target="_blank" rel="noopener">Apple Podcasts</a>
+        {% endif %}
+        {% if site.podcast.spotify %}
+          <a class="pill" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener">Spotify</a>
+        {% endif %}
+        {% if site.podcast.amazon %}
+          <a class="pill" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener">Amazon</a>
+        {% endif %}
+        {% if site.podcast.youtube %}
+          <a class="pill" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener">YouTube</a>
+        {% endif %}
+        {% if site.podcast.rss %}
+          <a class="pill" href="{{ site.podcast.rss }}" target="_blank" rel="noopener">RSS</a>
+        {% endif %}
+      </div>
+
+      {% if latest %}
+        <div class="hero-cta">
+          <a class="pill outline" href="{{ latest.url | relative_url }}">▶ Play latest</a>
+          <span class="muted hero-meta">{{ latest.date | date: "%b %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}</span>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if latest and latest.cover %}
+      <div class="hero-right">
+        <a class="hero-card" href="{{ latest.url | relative_url }}" aria-label="Open latest episode: {{ latest.title }}">
+          <img src="{{ latest.cover }}" alt="" loading="lazy">
+          <div class="hero-card-badge">Latest episode</div>
+          <div class="hero-card-play">▶</div>
+        </a>
+      </div>
+    {% endif %}
   </div>
 </section>
 
 <section class="latest">
   <div class="wrap">
     <h2 class="section-title">Latest Episode</h2>
-    {% assign latest = site.posts | where_exp: "p", "p.categories contains 'episodes'" | first %}
     {% if latest %}
       <article class="feature">
         <div class="feature-info">
@@ -44,7 +65,7 @@ title: MTN.fire
             {% endif %}
           </div>
         </div>
-        {% if latest.cover %}<img class="feature-cover" src="{{ latest.cover }}" alt="Cover">{% endif %}
+        {% if latest.cover %}<img class="feature-cover" src="{{ latest.cover }}" alt="Cover" loading="lazy">{% endif %}
       </article>
     {% else %}
       <p class="muted">No episodes yet. Add one in <code>_posts/</code>.</p>
@@ -59,7 +80,7 @@ title: MTN.fire
       {% assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" | limit:12 %}
       {% for post in eps %}
         <a class="card" href="{{ post.url | relative_url }}">
-          {% if post.cover %}<img src="{{ post.cover }}" alt="">{% endif %}
+          {% if post.cover %}<img src="{{ post.cover }}" alt="" loading="lazy">{% endif %}
           <div class="card-body">
             <h3>{{ post.title }}</h3>
             <p class="muted">{{ post.date | date: "%b %-d, %Y" }}{% if post.duration %} · {{ post.duration }}{% endif %}</p>
