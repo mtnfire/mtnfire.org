@@ -66,84 +66,145 @@ img{ max-width:100%; display:block }
   backdrop-filter:saturate(120%) blur(8px);
 }
 
-/* ========== Hero ========== */
+/* ---- Mobile header: lock height + alignment (fix iOS double-tall look) ---- */
+@media (max-width: 820px){
+  :root { --headH: 56px; }
+  .site-head{
+    height: var(--headH) !important;
+    min-height: var(--headH) !important;
+    padding: 0 14px !important;
+    display:flex !important; align-items:center !important;
+  }
+  .site-head .logo, .site-head .nav{
+    height:100% !important; display:flex !important; align-items:center !important;
+  }
+  .site-head .nav{ gap:14px; flex-wrap:nowrap; }
+  .site-head .nav a{ line-height:1; }
+  .nav-logo-link .nav-mark{ width:28px !important; height:28px !important; }
+
+  @supports (padding: max(0px)){
+    .site-head{
+      padding-left: max(14px, env(safe-area-inset-left)) !important;
+      padding-right: max(14px, env(safe-area-inset-right)) !important;
+    }
+  }
+}
+@media (min-width: 821px){
+  .site-head{ height:auto; padding:16px 20px; }
+}
+
+/* ---------- Socials visibility logic ---------- */
+/* Desktop: header icons visible, floating rail hidden */
+.nav-social { display:flex; align-items:center; gap:12px; margin-left:12px; }
+.nav-social .icon { width:28px; height:28px; border-radius:999px; }
+.nav-social .icon svg { width:18px; height:18px; }
+.social-rail { display:none !important; }
+
+/* Mobile: hide header icons, show floating rail */
+@media (max-width: 820px){
+  .nav-social { display:none !important; }
+  .social-rail {
+    display:block !important;
+    position:fixed; right:14px; bottom:14px; z-index:50;
+  }
+  .social-rail .icon-row{ display:flex; gap:8px }
+  .social-rail .icon{
+    width:34px; height:34px; border-radius:10px;
+    backdrop-filter:saturate(120%) blur(6px);
+    background:rgba(0,0,0,.06); border:1px solid var(--rule);
+  }
+}
+
+/* ========== Hero (with right-side logo) ========== */
 .hero{
-  padding: clamp(56px, 8vw, 96px) 0;
+  padding: clamp(44px, 6vw, 72px) 0 32px;
   border-bottom:1px solid var(--rule);
   background:
     radial-gradient(900px 350px at 20% -10%, rgba(255,90,31,.10), transparent 60%),
     radial-gradient(700px 280px at 80% -10%, rgba(255,255,255,.06), transparent 60%);
 }
-.brand{ font-size:clamp(2.2rem,4vw,3.25rem); font-weight:800; letter-spacing:-.02em; margin:0 0 .25rem }
-.tag{ margin:.25rem 0 1rem; color:var(--muted) }
-.subs{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center }
-.pill{
-  display:inline-block; padding:10px 14px; border:1px solid var(--accent);
-  border-radius:999px; background:var(--accent); color:var(--pillfg); font-weight:600;
-  transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-}
-.pill:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.08) }
-
-/* Hero with right-side logo (current) */
-.hero-with-logo .wrap{ max-width:1100px; text-align:left }
+.hero-with-logo .wrap{ max-width:1040px; text-align:left }
 .hero-split{
-  display:flex; align-items:center; justify-content:space-between;
-  gap: clamp(20px, 4vw, 40px);
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items:center;
+  gap: clamp(16px, 3vw, 32px);
 }
-.hero-left{ min-width:0 }
-.hero-left .subs{ justify-content:flex-start }
-.hero-right{ flex:0 0 auto; display:flex; justify-content:center }
+.hero-left{
+  display:grid;
+  grid-auto-rows:max-content;
+  row-gap:10px;
+  justify-items:start;
+}
+.hero-left .brand{
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  margin:0;
+  line-height:1.1;
+}
+.hero-left .tag{ margin:0; line-height:1.35; color:var(--muted) }
+
+.platforms{
+  display:flex; gap:12px; flex-wrap:wrap;
+  justify-content:flex-start; margin-top:2px;
+}
+.platforms .icon{
+  width:42px; height:42px;
+  display:grid; place-items:center;
+  border-radius:999px; border:1px solid var(--rule);
+  background:var(--bg); color:var(--fg);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.platforms .icon:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.08) }
+.platforms .icon svg{ width:18px; height:18px }
+
+.hero-right{ display:flex; justify-content:center }
 .hero-logo{
-  display:block; width:220px; max-width:42vw; height:auto; object-fit:contain;
+  width: min(260px, 32vw);
+  height:auto; object-fit:contain;
   border:1px solid var(--rule); border-radius:16px; padding:10px;
   box-shadow:0 24px 50px rgba(0,0,0,.12);
+  background-color: var(--bg);
+  image-rendering: -webkit-optimize-contrast;
 }
-/* safety clamp for any img inside hero */
-.hero-with-logo img{ max-width:min(260px, 60vw); height:auto }
 
 @media (max-width:900px){
-  .hero-split{ flex-direction:column; text-align:center }
-  .hero-left .subs{ justify-content:center }
+  .hero-split{ grid-template-columns:1fr; gap:14px }
+  .hero-with-logo .wrap, .hero-left{ text-align:center }
+  .hero-left{ justify-items:center }
+  .platforms{ justify-content:center }
   .hero-logo{ width:160px }
 }
 
-/* Kill the faint box behind the hero logo */
-.hero-logo{
-  background-color: var(--bg);   /* matches light/dark theme */
-  /* optional: if you want it a touch darker in dark mode, use this instead: */
-  /* background-color: #0f0f10; */
-}
-
-/* If you ever notice a halo on the PNG edges, this helps too */
-.hero-logo{ image-rendering: -webkit-optimize-contrast; }
-
-
-/* Platform icons in hero */
-.platforms{
-  display:flex; gap:10px; flex-wrap:wrap;
-  justify-content:center; margin-top:.5rem;
-}
-.platforms .icon{
-  width:44px; height:44px;
-  display:inline-grid; place-items:center;
-  border-radius:999px; border:1px solid var(--rule);
-  background:var(--bg); color:var(--fg);
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.platforms .icon:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-.sr-only{ position:absolute; width:1px; height:1px; margin:-1px; clip:rect(0 0 0 0); overflow:hidden; white-space:nowrap; border:0; padding:0 }
-
-/* ========== Latest feature ========== */
-.latest{ padding:36px 0; border-bottom:1px solid var(--rule) }
+/* ========== Latest Episode section ========== */
+.latest{ padding:36px 0; border-bottom:0; }
 .feature{
-  display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:center
+  display:grid;
+  grid-template-columns: 1fr clamp(220px, 24vw, 340px);
+  align-items:start;
+  gap:20px;
 }
-.feature-cover{ border-radius:12px }
+.feature-info h3{ margin-top:0 }
+.feature-cover{
+  width:100%; height:auto;
+  border-radius:12px; margin-top:2px;
+  box-shadow:0 10px 32px rgba(0,0,0,.18);
+}
 .player audio{ width:100%; border:1px solid var(--rule); border-radius:12px; padding:6px }
-@media (max-width:820px){ .feature{ grid-template-columns:1fr } }
+
+@media (min-width:1280px){
+  .feature{ grid-template-columns:1fr 320px; }
+}
+@media (max-width:820px){
+  .feature{ display:flex; flex-direction:column; gap:14px }
+  .feature-cover{ order:-1; width:100% }
+}
+
+/* Read-more toggle inside Latest */
+.more summary{ cursor:pointer; list-style:none; color:var(--muted); }
+.more[open] summary{ color:var(--fg); }
+.more summary::-webkit-details-marker{ display:none }
+.more .toggle-label{ text-decoration:underline }
+.more .latest-full{ margin-top:.5rem }
 
 /* ========== Episode cards grid ========== */
 .grid{ padding:36px 0 }
@@ -171,83 +232,121 @@ a.card:hover::after{ opacity:.9; transform:none }
 @media (prefers-reduced-motion:reduce){
   a.card:hover img{ transform:none } a.card::after{ transition:none }
 }
-/* Blog list: no play overlay or zoom */
-.blog-list a.card::after { content: none !important; }
-.blog-list a.card:hover img { transform: none !important; filter: none !important; }
 
-/* ========== Post page ========== */
+/* Blog list: no play overlay or zoom */
+.blog-list a.card::after { content:none !important; }
+.blog-list a.card:hover img { transform:none !important; filter:none !important; }
+
+/* ========== Post / Blog page ========== */
 .post{ padding:36px 0 }
-.post-head{ border-bottom:1px solid var(--rule); padding-bottom:20px; margin-bottom:28px }
-.post-head h1{ margin:0 }
+.post-head{ border-bottom:1px solid var(--rule); padding-bottom:16px; margin-bottom:24px }
+.post-head h1{ margin:0; font-size:clamp(1.6rem, 3.6vw, 2.2rem) }
 .post-cover{
   display:block; width:100%; height:auto;
   max-width:720px; margin:16px auto; border-radius:12px;
 }
-/* Blog/Article reading width + spacing */
-.post .wrap{ max-width: 900px; }           /* narrows the whole article slightly */
-.post-body{ max-width: 720px; margin: 0 auto; }  /* comfy reading line-length */
-.post-head{ margin-bottom: 24px; padding-bottom: 16px; }
-.post-head h1{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin: 0 0 .25rem; }
-
+.post .wrap{ max-width:900px }
+.post-body{ max-width:720px; margin:0 auto }
 .player.big{ max-width:720px; margin:12px auto 0 }
 .listen-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
 .pill.small{ padding:8px 12px; font-size:.9rem; border-radius:999px }
 
+/* ========== Episode detail layout (RSS pages) ========== */
+.ep-hero{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(18px, 4vw, 36px);
+  padding: 28px 0 0;
+  align-items:center;
+}
+.ep-cover img{
+  width:min(320px, 40vw);
+  height:auto;
+  border:1px solid var(--rule);
+  border-radius:16px;
+  box-shadow:0 24px 50px rgba(0,0,0,.12);
+  display:block;
+}
+.ep-title{
+  margin:0 0 .2rem;
+  letter-spacing:-.01em;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+}
+.ep-meta{ margin:.25rem 0 1rem }
+.ep-audio{ width:100%; border:1px solid var(--rule); border-radius:12px; padding:6px; display:block }
+.ep-body{ padding:18px 0 36px }
+.ep-prose{ max-width:70ch }
+.ep-actions{ margin-top:16px; display:flex; gap:16px; align-items:center; flex-wrap:wrap }
 
+@media (max-width: 900px){
+  .ep-hero{ grid-template-columns:1fr }
+  .ep-cover{ order:-1; display:flex; justify-content:center }
+  .ep-cover img{ width:200px }
+  .ep-prose{ max-width:none }
+}
 
 /* ========== About page ========== */
-.about .wrap{ max-width:980px; padding:36px 20px }
+.about .wrap{ max-width:1000px; padding:40px 20px }
 .about-wrap{ display:grid; grid-template-columns:1.4fr .8fr; gap:32px }
 .about-main h1{ margin:0 0 .5rem; letter-spacing:-.01em }
 .prose p{ margin:1rem 0 }
 .prose a{ text-decoration:underline; text-underline-offset:2px }
 .prose ul,.prose ol{ margin:.75rem 0 .75rem 1.25rem }
-.prose blockquote{
-  margin:1rem 0; padding:.75rem 1rem; border-left:3px solid var(--rule);
-  background:rgba(0,0,0,.03); border-radius:8px;
-}
+.prose blockquote{ margin:1rem 0; padding:.75rem 1rem; border-left:3px solid var(--rule); background:rgba(0,0,0,.03); border-radius:8px }
 .about-cta{ margin-top:16px; display:flex; gap:10px; flex-wrap:wrap }
 .pill.outline{ background:transparent; color:var(--fg); border-color:var(--fg) }
 .pill.outline:hover{ opacity:.9; transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.08) }
 .about-aside{ align-self:start; display:grid; gap:14px }
-.about-logo{ width:100%; max-width:180px; border:1px solid var(--rule); border-radius:12px; padding:8px }
+.about-logo{
+  width:100%; max-width:280px;
+  border:1px solid var(--rule); border-radius:12px; padding:10px;
+}
 .about-photo{ width:100%; border-radius:12px; border:1px solid var(--rule) }
+@media (min-width:1200px){ .about-logo{ max-width:320px } }
 @media (max-width:900px){
   .about-wrap{ grid-template-columns:1fr }
   .about-aside{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px }
   .about-logo{ max-width:100% }
 }
 
-/* About page logo size + spacing */
-.about-logo{
-  width: 100%;
-  max-width: 280px;           /* was ~180px */
+/* ========== Episodes page (season groups + filter) ========== */
+.season{
+  margin:12px 0 20px;
   border:1px solid var(--rule);
   border-radius:12px;
-  padding:10px;
+  background:var(--bg);
+  padding:6px 10px;
 }
+.season > summary{
+  cursor:pointer; list-style:none;
+  display:flex; align-items:baseline; gap:8px;
+  font-weight:600;
+}
+.season > summary::-webkit-details-marker{ display:none }
+.season[open]{ padding-bottom:12px }
+.season .cards{ margin-top:12px }
 
-@media (min-width: 1200px){
-  .about-logo{ max-width: 320px; }
+.filter-bar{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  margin:12px 0 8px;
 }
-
-/* Give the About page a touch more breathing room */
-.about .wrap{
-  max-width: 1000px;
-  padding: 40px 20px;
+.filter-bar .spacer{ flex:1 1 auto }
+.filter-bar input[type="search"], .filter-bar select{
+  padding:10px 12px; border:1px solid var(--rule);
+  border-radius:10px; background:var(--bg); color:var(--fg);
+  font:inherit;
 }
+.filter-bar button.pill.outline{ padding:8px 12px }
 
 /* ========== Share buttons ========== */
 .share-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
-.share-row .pill{
-  display:inline-flex; align-items:center; justify-content:center; line-height:1;
-}
+.share-row .pill{ display:inline-flex; align-items:center; justify-content:center; line-height:1 }
 button.pill{
   appearance:none; -webkit-appearance:none; font:inherit; font-weight:600;
   padding:10px 14px; border-radius:999px; border-width:1px;
 }
 
-/* ========== Social rail ========== */
+/* ========== Social rail base (desktop hidden by default above) ========== */
 .social-rail{
   position:fixed; right:16px; top:50%; transform:translateY(-50%);
   z-index:50; pointer-events:none;
@@ -260,17 +359,6 @@ button.pill{
   backdrop-filter:saturate(120%) blur(6px);
   background:rgba(0,0,0,.06); border:1px solid var(--rule);
 }
-@media (max-width:820px){
-  .social-rail{ top:auto; bottom:14px; right:14px; transform:none }
-  .social-rail .icon-row{ flex-direction:row; gap:8px }
-  .social-rail .icon{ width:34px; height:34px; border-radius:10px }
-}
-
-/* Footer socials */
-.site-foot{ padding:20px 0; text-align:center }
-.site-foot .icon-row{ justify-content:center }
-.site-foot .icon{ border-color:var(--rule) }
-.site-foot .muted{ margin-top:8px; font-size:.9rem }
 
 /* ========== 404 ========== */
 .nf{ padding: clamp(64px,8vw,96px) 0 96px; text-align:center }
@@ -278,9 +366,7 @@ button.pill{
 .nf .btns{ margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
 
 /* ========== Accessibility: skip link ========== */
-.skip-link{
-  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-}
+.skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
 .skip-link:focus-visible{
   left:16px; top:16px; width:auto; height:auto;
   padding:8px 12px; border:1px solid var(--rule); border-radius:8px;
@@ -296,285 +382,4 @@ button.pill{
   .card{ background:#1a1c1e; border-color:#2a2c2e }
   .site-head,.site-foot{ border-color:#2a2c2e }
   .social-rail .icon{ background:rgba(255,255,255,.08) }
-}
-
-/* ---------- Socials visibility logic ---------- */
-/* Desktop (default): header icons visible, floating rail hidden */
-.nav-social { display: flex; align-items: center; gap: 12px; margin-left: 12px; }
-.social-rail { display: none !important; }
-.nav-social .icon { width: 28px; height: 28px; border-radius: 999px; }
-.nav-social .icon svg { width: 18px; height: 18px; }
-
-/* Mobile: hide header icons, show floating rail */
-@media (max-width: 820px){
-  .nav-social { display: none !important; }
-  .social-rail {
-    display: block !important;
-    position: fixed; right: 14px; bottom: 14px; z-index: 50;
-  }
-  .social-rail .icon-row { display: flex; gap: 8px; }
-  .social-rail .icon { width: 34px; height: 34px; border-radius: 10px; }
-}
-
-/* Home cleanup: no divider after latest */
-.latest{
-  border-bottom: 0;
-  padding-bottom: 24px;
-}
-
-/* --- Hero layout polish: tighter desktop, centered mobile --- */
-.hero{ padding: clamp(44px, 6vw, 72px) 0 32px; }
-.hero-with-logo .wrap{ max-width: 1040px; }
-.hero-split{
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  align-items: center;
-  gap: clamp(16px, 3vw, 32px);
-}
-.hero-left .brand{
-  font-size: clamp(2rem, 4.2vw, 3.2rem);
-  margin: 0 0 .3rem;
-}
-.hero-left .tag{ margin: .2rem 0 .9rem; }
-.hero-right{ display: flex; justify-content: center; }
-.hero-logo{ width: min(260px, 32vw); height: auto; }
-
-@media (max-width: 900px){
-  .hero-split{ grid-template-columns: 1fr; gap: 14px; }
-  .hero-with-logo .wrap{ text-align: center; }
-  .hero-left{ text-align: center; }
-  .hero-left .subs{ justify-content: center; }
-  .hero-logo{ width: 160px; }
-}
-
-/* Mobile: show episode cover ABOVE text/player in the Latest block */
-@media (max-width: 820px){
-  .feature{ display: flex; flex-direction: column; gap: 14px; }
-  .feature-cover{ order:-1; width:100%; border-radius:12px; }
-  .feature-info{ order:0; }
-}
-
-/* ---- Mobile header: lock height + alignment (fix iOS double-tall look) ---- */
-@media (max-width: 820px){
-  :root { --headH: 56px; } /* adjust 52–60 if desired */
-
-  .site-head{
-    height: var(--headH) !important;
-    min-height: var(--headH) !important;
-    padding: 0 14px !important;     /* no vertical padding on phones */
-    display:flex !important; align-items:center !important;
-  }
-  .site-head .logo, .site-head .nav{
-    height:100% !important; display:flex !important; align-items:center !important;
-  }
-  .site-head .nav{ gap:14px; flex-wrap:nowrap; }
-  .site-head .nav a{ line-height:1; }
-  .nav-logo-link .nav-mark{ width:28px !important; height:28px !important; }
-
-  /* iPhone notch safe-area padding */
-  @supports (padding: max(0px)){
-    .site-head{
-      padding-left: max(14px, env(safe-area-inset-left)) !important;
-      padding-right: max(14px, env(safe-area-inset-right)) !important;
-    }
-  }
-}
-
-/* Desktop keeps the roomy padding */
-@media (min-width: 821px){
-  .site-head{ height:auto; padding:16px 20px; }
-}
-/* Episodes page: season accordions */
-.season{
-  margin: 12px 0 20px;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: var(--bg);
-  padding: 6px 10px;
-}
-.season > summary{
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-weight: 600;
-}
-.season > summary::-webkit-details-marker{ display:none }
-.season[open]{ padding-bottom: 12px; }
-.season .cards{ margin-top: 12px; }
-
-/* Filter bar */
-.filter-bar{
-  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-  margin: 12px 0 8px;
-}
-.filter-bar .spacer{ flex: 1 1 auto; }
-.filter-bar input[type="search"],
-.filter-bar select{
-  padding:10px 12px; border:1px solid var(--rule);
-  border-radius:10px; background:var(--bg); color:var(--fg);
-  font:inherit;
-}
-.filter-bar button.pill.outline{ padding: 8px 12px; }
-
-/* --- Hero alignment cleanup --- */
-
-/* Make the left side a simple vertical stack with consistent gaps */
-.hero-left{
-  display: grid;
-  grid-auto-rows: max-content;
-  row-gap: 10px;                /* even spacing between title, tag, icons */
-  justify-items: start;         /* align to the left on desktop */
-}
-
-@media (max-width: 900px){
-  .hero-left{ justify-items: center; }  /* center the stack on phones */
-}
-
-/* Kill the default margins so the gap above controls spacing */
-.hero-left .brand{
-  margin: 0;
-  line-height: 1.1;             /* keeps big text from looking loose */
-}
-.hero-left .tag{
-  margin: 0;
-  line-height: 1.35;
-}
-
-/* Icon row rhythm + consistent hit area */
-.platforms{
-  margin-top: 2px;              /* tiny nudge so it hugs the tag nicely */
-  gap: 12px;                    /* a hair more breathing room between icons */
-  justify-content: flex-start;  /* align with headline left edge on desktop */
-}
-@media (max-width: 900px){
-  .platforms{ justify-content: center; }
-}
-
-/* Normalize icon buttons so they feel perfectly even */
-.platforms .icon{
-  width: 42px; height: 42px;    /* same size for each circle */
-  display: grid; place-items: center;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  line-height: 1;               /* avoid stray vertical centering quirks */
-}
-.platforms .icon svg{ width: 18px; height: 18px; }
-
-/* --- Latest Episode: compact artwork + top-aligned layout --- */
-.feature{
-  /* left = text, right = art (responsive width) */
-  grid-template-columns: 1fr clamp(220px, 24vw, 340px);
-  align-items: start;            /* art sits beside the title/date */
-  gap: 20px;
-}
-
-.feature-info h3{ margin-top: 0; }  /* hug the top nicely */
-
-.feature-cover{
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-top: 2px;               /* tiny optical nudge */
-  box-shadow: 0 10px 32px rgba(0,0,0,.18);
-}
-
-/* If the art still feels big at very wide widths, cap its max */
-@media (min-width: 1280px){
-  .feature{
-    grid-template-columns: 1fr 320px;   /* hard cap on desktop-wide */
-  }
-}
-
-/* Mobile stack (you already have this, but keeping it here for clarity) */
-@media (max-width: 820px){
-  .feature{
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .feature-cover{
-    order: -1;        /* image first on phones */
-    width: 100%;
-  }
-}
-.more summary{ cursor:pointer; color:var(--muted); }
-.more[open] summary{ color:var(--fg); }
-.more .latest-full{ margin-top:.5rem; }
-
-.more summary {
-  cursor: pointer;
-  list-style: none;
-}
-.more summary::-webkit-details-marker { display: none; }
-.more summary .toggle-label { text-decoration: underline; }
-
-
-/* Episode detail layout polish */
-.episode-detail .post-head{
-  display:grid;
-  grid-template-columns: minmax(0,1.2fr) minmax(220px,.8fr);
-  align-items:center;
-  gap:24px;
-}
-.post-cover.small{
-  max-width:360px;
-  margin:0 auto;
-  border-radius:12px;
-}
-@media (max-width:820px){
-  .episode-detail .post-head{ grid-template-columns:1fr; }
-  .post-cover.small{ max-width:220px; }
-}
-.prose{ max-width:70ch; }
-.prose p{ margin:1rem 0; }
-
-/* ===== Episode page layout ===== */
-.ep-hero{
-  display:grid;
-  grid-template-columns: 320px 1fr;
-  gap: clamp(18px, 4vw, 36px);
-  padding: 28px 0 0;
-  align-items: center;
-}
-.ep-cover img{
-  width:min(320px, 40vw);
-  height:auto;
-  border:1px solid var(--rule);
-  border-radius:16px;
-  box-shadow:0 24px 50px rgba(0,0,0,.12);
-  display:block;
-}
-.ep-title{
-  margin:0 0 .2rem;
-  letter-spacing:-.01em;
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
-}
-.ep-meta{ margin:.25rem 0 1rem; }
-.ep-audio{
-  width:100%;
-  border:1px solid var(--rule);
-  border-radius:12px;
-  padding:6px;
-  display:block;
-}
-
-.ep-body{ padding: 18px 0 36px; }
-.ep-prose{ max-width: 70ch; }
-.ep-actions{ margin-top:16px; display:flex; gap:16px; align-items:center; flex-wrap:wrap }
-
-/* Make the platform icons look like little pills (reuse your .icon style if you want) */
-.platforms .icon{
-  width:40px; height:40px; display:inline-grid; place-items:center;
-  border-radius:999px; border:1px solid var(--rule);
-  background:var(--bg); color:var(--fg);
-}
-
-/* Stack on mobile */
-@media (max-width: 900px){
-  .ep-hero{ grid-template-columns: 1fr; }
-  .ep-cover{ order:-1; display:flex; justify-content:center; }
-  .ep-cover img{ width: 200px; }
-  .ep-prose{ max-width: none; }
 }
