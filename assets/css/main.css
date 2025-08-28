@@ -499,3 +499,6 @@ button.pill{
     width: 100%;
   }
 }
+.more summary{ cursor:pointer; color:var(--muted); }
+.more[open] summary{ color:var(--fg); }
+.more .latest-full{ margin-top:.5rem; }
