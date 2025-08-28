@@ -383,3 +383,24 @@ button.pill{
   .site-head,.site-foot{ border-color:#2a2c2e }
   .social-rail .icon{ background:rgba(255,255,255,.08) }
 }
+/* Hero + header socials: show only the icons (keep sr-only for a11y) */
+.hero .platforms a span:not(.sr-only),
+.nav-social a span:not(.sr-only){
+  display: none !important;
+}
+
+/* Belt-and-suspenders: zero out any stray inline text */
+.hero .platforms,
+.nav-social{
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Make sure SVGs still size nicely */
+.hero .platforms a svg,
+.nav-social a svg{
+  width: 18px;
+  height: 18px;
+  /* reset line-height just for the icon box */
+  line-height: 1;
+}
