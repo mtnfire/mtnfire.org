@@ -160,6 +160,9 @@ a.card:hover::after{ opacity:.9; transform:none }
 @media (prefers-reduced-motion:reduce){
   a.card:hover img{ transform:none } a.card::after{ transition:none }
 }
+/* Blog list: no play overlay or zoom */
+.blog-list a.card::after { content: none !important; }
+.blog-list a.card:hover img { transform: none !important; filter: none !important; }
 
 /* ========== Post page ========== */
 .post{ padding:36px 0 }
