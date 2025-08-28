@@ -289,3 +289,8 @@ button.pill{
   .social-rail .icon-row { display: flex; gap: 8px; }
   .social-rail .icon { width: 34px; height: 34px; border-radius: 10px; }
 }
+/* Home cleanup: no divider after latest */
+.latest{
+  border-bottom: 0;
+  padding-bottom: 24px; /* tighten space a bit */
+}
