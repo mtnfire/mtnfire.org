@@ -15,7 +15,7 @@
   <link rel="icon" href="{{ '/logo.png' | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="apple-touch-icon" href="{{ '/logo.png' | relative_url }}?v={{ site.time | date: '%s' }}">
 
-  <!-- Main stylesheet (IMPORTANT) -->
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
   {% include head.html %}
@@ -25,12 +25,13 @@
 
   <header class="site-head">
     <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    <nav class="nav">
+
+    <nav class="nav" aria-label="Primary">
       <a href="{{ '/episodes/' | relative_url }}">Episodes</a>
       <a href="{{ '/about/' | relative_url }}">About</a>
 
-      <!-- Desktop-only socials inline in the header -->
-      <div class="nav-social">
+      <!-- Desktop-only socials (hidden on mobile via CSS) -->
+      <div class="nav-social" aria-label="Social links">
         {% include social-icons.html %}
       </div>
 
@@ -42,7 +43,7 @@
     </nav>
   </header>
 
-  <!-- Mobile-only floating social rail -->
+  <!-- Mobile-only floating social rail (shown on mobile via CSS) -->
   <div class="social-rail" aria-label="Social links">
     {% include social-icons.html %}
   </div>
@@ -60,7 +61,7 @@
     (function(){
       const head = document.querySelector('.site-head');
       const onScroll = () => head && head.classList.toggle('is-stuck', window.scrollY > 4);
-      onScroll(); addEventListener('scroll', onScroll, {passive:true});
+      onScroll(); addEventListener('scroll', onScroll, { passive: true });
     })();
   </script>
 </body>
