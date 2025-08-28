@@ -1,10 +1,12 @@
 import os, re, sys
 from datetime import datetime
 from pathlib import Path
+from time import mktime
 
 import feedparser
 from slugify import slugify  # from python-slugify
 
+# ---- config / feed URL ----
 FEED = (
     os.environ.get("FEED_URL")
     or os.environ.get("PODCAST_RSS")
@@ -16,42 +18,57 @@ if not FEED:
 posts_dir = Path("_posts")
 posts_dir.mkdir(exist_ok=True)
 
-# Track existing GUIDs so we don't duplicate
-existing_guids = set()
+# ---- helpers ----
+def to_int(v):
+    try:
+        if v is None:
+            return None
+        return int(str(v).strip())
+    except Exception:
+        return None
+
+def extract_season(entry):
+    # Most feeds expose <itunes:season> as 'itunes_season'
+    for key in ("itunes_season", "season"):
+        if key in entry and entry.get(key) not in (None, ""):
+            return to_int(entry.get(key))
+    return None
+
+def sanitize_excerpt(s):
+    s = re.sub(r"<.*?>", "", s or "").strip()
+    if s:
+        s = re.sub(r"\s+", " ", s)[:180]
+    return s
+
+# ---- index existing posts by GUID ----
+existing = {}  # guid -> {"path": Path, "text": str, "has_season": bool}
 for p in posts_dir.glob("*.md"):
     text = p.read_text(encoding="utf-8", errors="ignore")
     m = re.search(r'^guid:\s*"?(.+?)"?\s*$', text, re.M)
     if m:
-        existing_guids.add(m.group(1).strip())
+        guid = m.group(1).strip()
+        has_season = re.search(r'^season:\s*\d+\s*$', text, re.M) is not None
+        existing[guid] = {"path": p, "text": text, "has_season": has_season}
 
 feed = feedparser.parse(FEED)
+
 new_count = 0
+updated_count = 0
 
 for e in feed.entries:
     guid = e.get("id") or e.get("guid") or e.get("link")
-    if guid and guid in existing_guids:
-        continue
-
     title = e.get("title", "Episode")
 
-    # Date handling
+    # Date
     if e.get("published_parsed"):
-        from time import mktime
         dt = datetime.fromtimestamp(mktime(e.published_parsed))
     elif e.get("updated_parsed"):
-        from time import mktime
         dt = datetime.fromtimestamp(mktime(e.updated_parsed))
     else:
         dt = datetime.utcnow()
     date_str = dt.strftime("%Y-%m-%d")
 
-    # File name
-    slug = slugify(title)[:60] or "episode"
-    fn = posts_dir / f"{date_str}-{slug}.md"
-    if fn.exists():
-        continue
-
-    # Audio enclosure
+    # Audio
     audio = ""
     if e.get("links"):
         for l in e.links:
@@ -63,18 +80,15 @@ for e in feed.entries:
 
     # Duration / summary
     dur = e.get("itunes_duration") or ""
-    summary = re.sub(r"<.*?>", "", e.get("summary", "")).strip()
-    if summary:
-        summary = re.sub(r"\s+", " ", summary)[:180]
+    summary = sanitize_excerpt(e.get("summary", ""))
 
-    # Cover (episode-level first)
+    # Cover (episode first, then feed fallback)
     cover = ""
     if "image" in e and isinstance(e.image, dict):
         cover = e.image.get("href", "")
     elif e.get("itunes_image"):
         cover = e.itunes_image.get("href", "") if isinstance(e.itunes_image, dict) else e.itunes_image
 
-    # Fallback to feed-level image
     if not cover:
         ff = getattr(feed, "feed", {})
         if isinstance(getattr(feed, "image", None), dict):
@@ -85,7 +99,40 @@ for e in feed.entries:
             im = ff["itunes_image"]
             cover = im.get("href", "") if isinstance(im, dict) else im
 
-    # Write front matter (safe single-quoted YAML)
+    # ---- season ----
+    season = extract_season(e)  # int or None
+
+    # ---- update existing post (by GUID) ----
+    if guid in existing:
+        if season is not None and not existing[guid]["has_season"]:
+            txt = existing[guid]["text"]
+            # find front-matter block
+            mfm = re.search(r'^---\s*\n(.*?)\n---\s*', txt, re.S | re.M)
+            if mfm:
+                fm_block = mfm.group(1)
+                if re.search(r'^season:\s*\d+\s*$', fm_block, re.M) is None:
+                    # insert after categories if present, else before closing ---
+                    if re.search(r'^categories:', fm_block, re.M):
+                        fm_block_new = re.sub(
+                            r'^(categories:.*)$',
+                            r'\1\nseason: {}'.format(season),
+                            fm_block,
+                            flags=re.M,
+                        )
+                    else:
+                        fm_block_new = fm_block + f"\nseason: {season}"
+                    txt_new = txt[:mfm.start(1)] + fm_block_new + txt[mfm.end(1):]
+                    existing[guid]["path"].write_text(txt_new, encoding="utf-8")
+                    updated_count += 1
+        continue  # don’t create a duplicate
+
+    # ---- create new post file ----
+    slug = slugify(title)[:60] or "episode"
+    fn = posts_dir / f"{date_str}-{slug}.md"
+    if fn.exists():
+        # if filename collides but guid differs, skip (rare)
+        continue
+
     fm = []
     fm.append("---")
     fm.append("layout: episode")
@@ -93,6 +140,8 @@ for e in feed.entries:
     fm.append(f"title: '{safe_title}'")
     fm.append(f"date: {date_str}")
     fm.append("categories: [episodes]")
+    if season is not None:
+        fm.append(f"season: {season}")  # keep as integer in YAML
     if summary:
         safe_summary = summary.replace("'", "''")
         fm.append(f"excerpt: '{safe_summary}'")
@@ -110,4 +159,4 @@ for e in feed.entries:
     fn.write_text("\n".join(fm) + body, encoding="utf-8")
     new_count += 1
 
-print(f"Imported {new_count} new episode(s).")
+print(f"Imported {new_count} new episode(s), updated {updated_count} existing with season.")
