@@ -29,7 +29,7 @@ layout: default
     </div>
   </div>
 
-  <!-- Body (full description + share / platforms) -->
+  <!-- Body (full description + actions) -->
   <div class="wrap ep-body">
     {% comment %}
       Prefer full content. Strip the old placeholder if it exists.
@@ -44,57 +44,50 @@ layout: default
       {{ cleaned | markdownify }}
     </div>
 
+    <!-- Actions: one Share button + your existing platform icons -->
     <div class="ep-actions">
-     <div class="ep-actions">
-  <!-- One share button -->
-  <button
-    class="pill outline share-btn"
-    type="button"
-    data-title="{{ page.title | escape }}"
-    data-url="{{ page.url | absolute_url }}"
-  >
-    Share
-  </button>
+      <button
+        class="pill outline share-btn"
+        type="button"
+        data-title="{{ page.title | escape }}"
+        data-url="{{ page.url | absolute_url }}"
+      >
+        Share
+      </button>
 
-  <!-- Platform icons (reuse the same icons you show in the hero) -->
-  <div class="platforms">
-    {% if site.podcast.apple %}
-      <a class="icon" href="{{ site.podcast.apple }}" aria-label="Apple Podcasts" target="_blank" rel="noopener">
-        {% include icons/apple.svg %}
-      </a>
-    {% endif %}
-    {% if site.podcast.spotify %}
-      <a class="icon" href="{{ site.podcast.spotify }}" aria-label="Spotify" target="_blank" rel="noopener">
-        {% include icons/spotify.svg %}
-      </a>
-    {% endif %}
-    {% if site.podcast.amazon %}
-      <a class="icon" href="{{ site.podcast.amazon }}" aria-label="Amazon Music" target="_blank" rel="noopener">
-        {% include icons/amazon.svg %}
-      </a>
-    {% endif %}
-    {% if site.podcast.youtube %}
-      <a class="icon" href="{{ site.podcast.youtube }}" aria-label="YouTube" target="_blank" rel="noopener">
-        {% include icons/youtube.svg %}
-      </a>
-    {% endif %}
-    {% if site.podcast.rss %}
-      <a class="icon" href="{{ site.podcast.rss }}" aria-label="RSS" target="_blank" rel="noopener">
-        {% include icons/rss.svg %}
-      </a>
-    {% endif %}
-  </div>
-</div>
-
-      {% if site.podcast %}
-      <div class="platforms" style="margin-top:10px">
-        {% if site.podcast.spotify %}<a class="icon" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener" aria-label="Spotify"><span class="sr-only">Spotify</span>🎧</a>{% endif %}
-        {% if site.podcast.apple %}<a class="icon" href="{{ site.podcast.apple }}" target="_blank" rel="noopener" aria-label="Apple Podcasts"><span class="sr-only">Apple Podcasts</span></a>{% endif %}
-        {% if site.podcast.amazon %}<a class="icon" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener" aria-label="Amazon Music"><span class="sr-only">Amazon</span>🅰️</a>{% endif %}
-        {% if site.podcast.youtube %}<a class="icon" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener" aria-label="YouTube Music"><span class="sr-only">YouTube</span>▶️</a>{% endif %}
-        {% if site.podcast.rss %}<a class="icon" href="{{ site.podcast.rss }}" target="_blank" rel="noopener" aria-label="RSS"><span class="sr-only">RSS</span>📰</a>{% endif %}
-      </div>
-      {% endif %}
+      {% include social-icons.html %}
     </div>
   </div>
 </section>
+
+<script>
+  // Single "Share" button: uses Web Share API when available,
+  // falls back to copying the URL to the clipboard.
+  (function () {
+    const btn = document.querySelector('.share-btn');
+    if (!btn) return;
+
+    const url = btn.dataset.url || location.href;
+    const title = btn.dataset.title || document.title;
+
+    async function fallbackCopy() {
+      try {
+        await navigator.clipboard.writeText(url);
+        const original = btn.textContent;
+        btn.textContent = 'Link copied!';
+        setTimeout(() => (btn.textContent = original), 1400);
+      } catch (_) {
+        // swallow
+      }
+    }
+
+    btn.addEventListener('click', async () => {
+      if (navigator.share) {
+        try { await navigator.share({ title, url }); }
+        catch (_) { /* user cancelled */ }
+      } else {
+        fallbackCopy();
+      }
+    });
+  })();
+</script>
