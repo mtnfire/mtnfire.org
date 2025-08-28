@@ -549,3 +549,35 @@ button.pill{
   .social-rail .icon{ width: 34px; height: 34px; border-radius: 10px; }
   .social-rail .icon svg, .social-rail .icon img{ width: 18px; height: 18px; }
 }
+/* Mobile: float the social rail lower-right instead of center */
+@media (max-width: 820px){
+  :root{
+    /* adjust this to taste: 40–120px usually works */
+    --rail-offset: 72px;
+  }
+
+  .social-rail{
+    position: fixed;
+    top: auto !important;
+    bottom: calc(var(--rail-offset) + env(safe-area-inset-bottom));
+    right: max(14px, env(safe-area-inset-right));
+    transform: none !important;
+    z-index: 50;
+  }
+
+  /* keep the rail vertical; remove this if you prefer a row */
+  .social-rail .icon-row{
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* make sure icons are perfectly centered inside their pills */
+  .social-rail .icon{
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+}
