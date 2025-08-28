@@ -439,3 +439,35 @@ a.card:hover::after{ opacity: .9; transform: none; }
   .hero-right{ order: 2 } /* logo after text on mobile */
   .hero-logo{ width:min(180px, 60vw); }
 }
+
+/* --- Hero with right-side logo (flex version) --- */
+.hero-with-logo .wrap{ max-width:1100px; }
+.hero-split{
+  display:flex; align-items:center; justify-content:space-between;
+  gap: clamp(20px, 4vw, 40px);
+}
+.hero-left{ min-width:0; }
+.hero-left .subs{ justify-content:flex-start; }
+.hero-right{ flex:0 0 auto; display:flex; justify-content:center; }
+
+/* Primary clamp for the logo */
+.hero-logo{
+  display:block;
+  width: 220px;              /* change this to taste (e.g. 260px) */
+  max-width: 42vw;
+  height:auto; object-fit:contain;
+  border:1px solid var(--rule);
+  border-radius:16px;
+  padding:10px;
+  box-shadow:0 24px 50px rgba(0,0,0,.12);
+}
+
+/* Safety clamp: any image inside the hero */
+.hero-with-logo img{ max-width: min(260px, 60vw); height:auto; }
+
+/* Stack nicely on phones */
+@media (max-width: 900px){
+  .hero-split{ flex-direction:column; text-align:center; }
+  .hero-left .subs{ justify-content:center; }
+  .hero-logo{ width:160px; }
+}
