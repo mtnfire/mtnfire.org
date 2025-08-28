@@ -332,3 +332,7 @@ a.card:hover::after{ opacity: .9; transform: none; }
   a.card:hover img{ transform:none }
   a.card::after{ transition:none }
 }
+/* 404 page */
+.nf{ padding: clamp(64px,8vw,96px) 0 96px; text-align:center }
+.nf h1{ margin:0 0 .5rem; letter-spacing:-.01em; font-size:clamp(1.8rem,4vw,2.4rem) }
+.nf .btns{ margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
