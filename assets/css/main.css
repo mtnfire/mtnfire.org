@@ -313,3 +313,22 @@ button.pill{
   background-size: 100% 2px;
   outline: none;
 }
+
+/* Card hover polish */
+a.card{ position: relative; overflow: hidden; }
+a.card:hover img{ transform: scale(1.02); filter: brightness(.95); }
+a.card::after{
+  content: "▶";
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 30px; line-height: 1;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 6px 16px rgba(0,0,0,.25);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+a.card:hover::after{ opacity: .9; transform: none; }
+@media (prefers-reduced-motion: reduce){
+  a.card:hover img{ transform:none }
+  a.card::after{ transition:none }
+}
