@@ -521,3 +521,31 @@ button.pill{
   .ep-actions a.icon{ width: 48px; height: 48px; }
   .ep-actions a.icon svg{ width: 24px; height: 24px; }
 }
+/* Mobile floating rail: perfectly center the icons */
+.social-rail .icon-row{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.social-rail .icon{
+  display: inline-grid;        /* grid = easy centering */
+  place-items: center;         /* center both axes */
+  line-height: 1;              /* kill baseline wiggle */
+  padding: 0;                  /* no extra pad */
+  box-sizing: border-box;
+}
+
+/* Center the actual glyph */
+.social-rail .icon svg,
+.social-rail .icon img{
+  display: block;              /* remove baseline */
+  width: 18px;
+  height: 18px;
+}
+
+/* Your mobile size (keep what you already had, just centering applies too) */
+@media (max-width: 820px){
+  .social-rail .icon{ width: 34px; height: 34px; border-radius: 10px; }
+  .social-rail .icon svg, .social-rail .icon img{ width: 18px; height: 18px; }
+}
