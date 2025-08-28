@@ -43,5 +43,13 @@
   <footer class="site-foot">
     <p class="muted">© {{ "now" | date: "%Y" }} {{ site.title }} · All rights reserved</p>
   </footer>
+  <script>
+(function(){
+  const head = document.querySelector('.site-head');
+  const onScroll = () => head && head.classList.toggle('is-stuck', window.scrollY > 4);
+  onScroll(); addEventListener('scroll', onScroll, {passive:true});
+})();
+</script>
+
 </body>
 </html>
