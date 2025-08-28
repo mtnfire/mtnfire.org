@@ -5,6 +5,7 @@ title: MTN.fire
 
 {% assign latest = site.posts | where_exp: "p", "p.categories contains 'episodes'" | first %}
 
+<!-- Hero with logo on the right + icon buttons -->
 <section class="hero hero-with-logo">
   <div class="wrap hero-split">
     <div class="hero-left">
@@ -15,13 +16,12 @@ title: MTN.fire
     </div>
 
     <div class="hero-right">
-      <img class="hero-logo" src="{{ '/logo.png' | relative_url }}" alt="MTN.fire logo">
+      <img class="hero-logo" src="{{ '/logo.png' | relative_url }}" alt="MTN.fire logo" loading="lazy">
     </div>
   </div>
 </section>
 
-
-
+<!-- Latest only (no full list on the homepage) -->
 <section class="latest">
   <div class="wrap">
     <h2 class="section-title">Latest Episode</h2>
@@ -29,37 +29,28 @@ title: MTN.fire
       <article class="feature">
         <div class="feature-info">
           <h3><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h3>
-          <p class="muted">{{ latest.date | date: "%B %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}</p>
+          <p class="muted">
+            {{ latest.date | date: "%B %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}
+          </p>
           <p>{{ latest.excerpt }}</p>
+
           <div class="player">
             {% if latest.audio_url %}
               <audio controls preload="none" src="{{ latest.audio_url }}"></audio>
             {% endif %}
           </div>
+
+          <p style="margin-top:14px">
+            <a class="pill outline" href="{{ '/episodes/' | relative_url }}">Browse all episodes →</a>
+          </p>
         </div>
-        {% if latest.cover %}<img class="feature-cover" src="{{ latest.cover }}" alt="Cover" loading="lazy">{% endif %}
+
+        {% if latest.cover %}
+          <img class="feature-cover" src="{{ latest.cover }}" alt="Cover" loading="lazy">
+        {% endif %}
       </article>
     {% else %}
       <p class="muted">No episodes yet. Add one in <code>_posts/</code>.</p>
     {% endif %}
-  </div>
-</section>
-
-<section class="grid">
-  <div class="wrap">
-    <h2 class="section-title">Episodes</h2>
-    <div class="cards">
-      {% assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" | limit:12 %}
-      {% for post in eps %}
-        <a class="card" href="{{ post.url | relative_url }}">
-          {% if post.cover %}<img src="{{ post.cover }}" alt="" loading="lazy">{% endif %}
-          <div class="card-body">
-            <h3>{{ post.title }}</h3>
-            <p class="muted">{{ post.date | date: "%b %-d, %Y" }}{% if post.duration %} · {{ post.duration }}{% endif %}</p>
-            <p class="line-clamp">{{ post.excerpt }}</p>
-          </div>
-        </a>
-      {% endfor %}
-    </div>
   </div>
 </section>
