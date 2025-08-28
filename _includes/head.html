@@ -8,3 +8,8 @@
 <link rel="icon" href="{{ site.baseurl }}/favicon.png?v={{ site.time | date: '%s' }}">
 <link rel="apple-touch-icon" href="{{ site.baseurl }}/favicon.png?v={{ site.time | date: '%s' }}">
 <meta name="theme-color" content="#111111">
+
+{% if page.cover and page.image == nil %}
+  <meta property="og:image" content="{{ page.cover }}">
+  <meta name="twitter:image" content="{{ page.cover }}">
+{% endif %}
