@@ -218,6 +218,25 @@ a.card:hover::after{ opacity:.9; transform:none }
   .about-logo{ max-width:100% }
 }
 
+/* About page logo size + spacing */
+.about-logo{
+  width: 100%;
+  max-width: 280px;           /* was ~180px */
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:10px;
+}
+
+@media (min-width: 1200px){
+  .about-logo{ max-width: 320px; }
+}
+
+/* Give the About page a touch more breathing room */
+.about .wrap{
+  max-width: 1000px;
+  padding: 40px 20px;
+}
+
 /* ========== Share buttons ========== */
 .share-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
 .share-row .pill{
