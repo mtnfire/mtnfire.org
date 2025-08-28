@@ -288,3 +288,13 @@ button.pill{
   border-radius: 999px;
   border-width: 1px;              /* match link pills */
 }
+/* Sticky header polish on scroll */
+.site-head.is-stuck{
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+  background: rgba(255,255,255,.85);
+  backdrop-filter: saturate(120%) blur(8px);
+}
+@media (prefers-color-scheme: dark){
+  .site-head.is-stuck{ background: rgba(15,16,16,.65); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+}
+
