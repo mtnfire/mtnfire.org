@@ -45,3 +45,21 @@ socials:
   instagram:  "https://www.instagram.com/mtn.fire/"
   tiktok:   "https://www.tiktok.com/@mtn.fire"
   email: "mailto:mtn.fire86@gmail.com"   # optional, like: "mailto:you@mtnfire.org"
+
+  title: "MTN.fire"
+description: "Testimony. Fire. Hope. A podcast carrying the fire of God into everyday life."
+
+# Preview values (flip these when we move to mtnfire.org)
+url: https://mtnfire.github.io
+baseurl: /mtnfire.org
+
+# Used by jekyll-seo-tag
+logo: "/logo.png"              # small square is fine
+image: "/assets/img/og.jpg"    # 1200x630 default share image (optional but nice)
+
+# Optional social handles (improves Twitter cards, etc.)
+# twitter:
+#   username: mtnfire
+# facebook:
+#   app_id: "1234567890"       # only if you have one
+
