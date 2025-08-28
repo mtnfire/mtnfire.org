@@ -1,53 +1,52 @@
 ---
 layout: default
 ---
-<article class="post">
-  <div class="wrap">
-    <header class="post-head">
+<article class="post episode-detail">
+  <header class="post-head">
+    <div class="meta">
       <h1>{{ page.title }}</h1>
-      <p class="muted">{{ page.date | date: "%B %-d, %Y" }}{% if page.duration %} · {{ page.duration }}{% endif %}</p>
-
-      {% if page.cover %}
-        <img class="post-cover" src="{{ page.cover }}" alt="">
-      {% endif %}
-
-      <div class="player big">
-        {% if page.audio_url %}
-          <audio controls preload="none" src="{{ page.audio_url }}"></audio>
+      <p class="muted">
+        {{ page.date | date: "%B %-d, %Y" }}
+        {% if page.duration %} · {{ page.duration }}{% endif %}
+        {% if page.season or page.itunes_season or page.episode_number or page.itunes_episode %}
+          · S{{ page.season | default: page.itunes_season }}{% if page.episode_number or page.itunes_episode %}E{{ page.episode_number | default: page.itunes_episode }}{% endif %}
         {% endif %}
-      </div>
-
-      <!-- Share buttons -->
-      <div class="share-row">
-        <button class="pill outline copy-link" data-url="{{ page.url | absolute_url }}">Copy link</button>
-        <a class="pill outline" href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | uri_escape }}&text={{ page.title | uri_escape }}" target="_blank" rel="noopener">Share on X</a>
-        <a class="pill outline" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Facebook</a>
-      </div>
-    </header>
-
-    <div class="post-body">
-      {{ content }}
+      </p>
     </div>
 
-    <div class="listen-row">
-      {% if site.podcast.spotify %}<a class="pill small" href="{{ site.podcast.spotify }}" target="_blank" rel="noopener">Spotify</a>{% endif %}
-      {% if site.podcast.apple %}<a class="pill small" href="{{ site.podcast.apple }}" target="_blank" rel="noopener">Apple</a>{% endif %}
-      {% if site.podcast.amazon %}<a class="pill small" href="{{ site.podcast.amazon }}" target="_blank" rel="noopener">Amazon</a>{% endif %}
-      {% if site.podcast.youtube %}<a class="pill small" href="{{ site.podcast.youtube }}" target="_blank" rel="noopener">YouTube</a>{% endif %}
-      {% if site.podcast.rss %}<a class="pill small" href="{{ site.podcast.rss }}" target="_blank" rel="noopener">RSS</a>{% endif %}
-    </div>
+    {% if page.cover %}
+      <img class="post-cover small" src="{{ page.cover }}" alt="">
+    {% endif %}
+  </header>
+
+  <div class="player big">
+    {% if page.audio_url %}
+      <audio controls preload="none" src="{{ page.audio_url }}"></audio>
+    {% endif %}
+  </div>
+
+  <div class="post-body prose">
+    {%- assign clean = content | replace: 'Imported automatically from RSS.', '' -%}
+    {{ clean }}
+  </div>
+
+  <div class="share-row">
+    <button class="pill outline" id="copylink" type="button">Copy link</button>
+    <a class="pill outline" href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | uri_escape }}&text={{ page.title | uri_escape }}" target="_blank" rel="noopener">Share on X</a>
+    <a class="pill outline" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}" target="_blank" rel="noopener">Facebook</a>
   </div>
 </article>
 
 <script>
-document.addEventListener('click', function(e){
-  const btn = e.target.closest('.copy-link');
+(function(){
+  const btn = document.getElementById('copylink');
   if(!btn) return;
-  const url = btn.getAttribute('data-url');
-  navigator.clipboard.writeText(url).then(()=>{
-    const prev = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(()=>btn.textContent = prev, 1200);
+  btn.addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText('{{ page.url | absolute_url }}');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy link', 1200);
+    }catch(e){}
   });
-});
+})();
 </script>
