@@ -29,7 +29,7 @@ social:
     - https://www.youtube.com/@MTN-fire
 
 # Cloudflare Web Analytics (optional)
-cloudflare_analytics_token: ""
+cloudflare_analytics_token: "0c9d2d00aca44ce6a156791272f79442"
 
 # Podcast directories (used for buttons)
 podcast:
