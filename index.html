@@ -37,17 +37,18 @@ title: MTN.fire
           {%- assign short = latest.excerpt | strip_html | strip -%}
           {%- assign full  = latest.summary_full | default: short -%}
 
-          <div class="desc">
-            <p class="latest-short">{{ short }}</p>
-            {% if full != short %}
-              <details class="more">
-                <summary>Show more</summary>
-                <div class="latest-full">
-                  <p>{{ full }}</p>
-                </div>
-              </details>
-            {% endif %}
-          </div>
+        <div class="desc">
+  <p class="latest-short">{{ short }}</p>
+  {% if full != short %}
+    <details class="more" id="latest-more">
+      <summary><span class="toggle-label">Show more</span></summary>
+      <div class="latest-full">
+        <p>{{ full }}</p>
+      </div>
+    </details>
+  {% endif %}
+</div>
+
 
           <div class="player">
             {% if latest.audio_url %}
