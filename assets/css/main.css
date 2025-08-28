@@ -432,3 +432,65 @@ button.pill{
   height: 18px;
   line-height: 1;
 }
+/* --- Normalize platform icon pills (hero + header) --- */
+
+/* Perfect circles + remove any baseline/whitespace wobble */
+.platforms .icon,
+.nav-social .icon{
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 0;         /* kill inline text width */
+  line-height: 0;       /* kill baseline wiggle */
+  padding: 0;           /* no padding; use SVG size instead */
+}
+
+/* Make every glyph the same visual size and truly centered */
+.platforms .icon > svg,
+.platforms .icon > img,
+.nav-social .icon > svg,
+.nav-social .icon > img{
+  width: 20px;          /* 18–20px looks best in a 40px pill */
+  height: 20px;
+  display: block;       /* avoids inline-img descender space */
+}
+
+/* If any SVG ships with hard-coded black fills/strokes, inherit our color */
+.platforms .icon [fill="#000"],
+.platforms .icon [fill*="#000"],
+.platforms .icon [stroke="#000"],
+.platforms .icon [stroke*="#000"],
+.nav-social .icon [fill="#000"],
+.nav-social .icon [fill*="#000"],
+.nav-social .icon [stroke="#000"],
+.nav-social .icon [stroke*="#000"]{
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Subtle hover/focus polish (keeps icons crisp) */
+.platforms .icon:hover,
+.nav-social .icon:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+.platforms .icon:focus-visible,
+.nav-social .icon:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.05), 0 0 0 6px rgba(0,0,0,.08);
+}
+
+/* Dark mode surface tweak so the pills don't glow */
+@media (prefers-color-scheme: dark){
+  .platforms .icon,
+  .nav-social .icon{
+    background: rgba(255,255,255,.06);
+    border-color: var(--rule);
+  }
+}
