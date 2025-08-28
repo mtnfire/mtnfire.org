@@ -92,6 +92,32 @@
     }
   })();
 </script>
+<script>
+  (function(){
+    const btn = document.querySelector('.share-btn');
+    if (!btn) return;
+    const url = btn.dataset.url || location.href;
+    const title = btn.dataset.title || document.title;
+
+    async function fallbackCopy() {
+      try {
+        await navigator.clipboard.writeText(url);
+        const original = btn.textContent;
+        btn.textContent = 'Link copied!';
+        setTimeout(() => btn.textContent = original, 1400);
+      } catch (_) {}
+    }
+
+    btn.addEventListener('click', async () => {
+      if (navigator.share) {
+        try { await navigator.share({ title, url }); }
+        catch(_) { /* user cancelled */ }
+      } else {
+        fallbackCopy();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
