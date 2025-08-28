@@ -581,3 +581,11 @@ button.pill{
     border-radius: 10px;
   }
 }
+/* Center footer text across the site */
+.site-foot{
+  display: flex;              /* robust centering regardless of child width */
+  justify-content: center;
+  padding: 20px 0;            /* keeps your existing spacing */
+  text-align: center;
+}
+.site-foot p{ margin: 0; }    /* kill default paragraph margins */
