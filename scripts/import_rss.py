@@ -3,7 +3,32 @@ from datetime import datetime
 from pathlib import Path
 
 import feedparser
-from slugify import slugify  # from python-slugify
+from slugify import slugify  # pip install python-slugify
+
+def to_int(x):
+    try:
+        return int(str(x).strip())
+    except Exception:
+        return 0
+
+def guess_nums_from_title(title: str):
+    """Best-effort fallback if RSS doesn't include itunes:season/itunes:episode."""
+    if not title:
+        return 0, 0
+    # S1E5 / s01e12 style
+    m = re.search(r"[Ss]\s*0*(\d+)\s*[Ee]\s*0*(\d+)", title)
+    if m:
+        return to_int(m.group(1)), to_int(m.group(2))
+    # Season 2, Episode 7 (either or both)
+    s = 0
+    e = 0
+    m = re.search(r"[Ss]eason\s+0*(\d+)", title)
+    if m:
+        s = to_int(m.group(1))
+    m = re.search(r"(?:[Ee]pisode|[Ee]p\.?)\s*0*(\d+)", title)
+    if m:
+        e = to_int(m.group(1))
+    return s, e
 
 FEED = (
     os.environ.get("FEED_URL")
@@ -16,7 +41,7 @@ if not FEED:
 posts_dir = Path("_posts")
 posts_dir.mkdir(exist_ok=True)
 
-# Track existing GUIDs so we don't duplicate
+# Dedup inside a single run (not across runs)
 existing_guids = set()
 for p in posts_dir.glob("*.md"):
     text = p.read_text(encoding="utf-8", errors="ignore")
@@ -34,7 +59,7 @@ for e in feed.entries:
 
     title = e.get("title", "Episode")
 
-    # Date handling
+    # Date
     if e.get("published_parsed"):
         from time import mktime
         dt = datetime.fromtimestamp(mktime(e.published_parsed))
@@ -45,7 +70,7 @@ for e in feed.entries:
         dt = datetime.utcnow()
     date_str = dt.strftime("%Y-%m-%d")
 
-    # File name
+    # Filename
     slug = slugify(title)[:60] or "episode"
     fn = posts_dir / f"{date_str}-{slug}.md"
     if fn.exists():
@@ -61,27 +86,26 @@ for e in feed.entries:
     if not audio and e.get("enclosures"):
         audio = e.enclosures[0].get("href", "")
 
-    # Duration + summaries
+    # Duration
     dur = e.get("itunes_duration") or ""
 
-    # Short summary (excerpt)
+    # Short excerpt
     summary = re.sub(r"<.*?>", "", e.get("summary", "")).strip()
     if summary:
         summary = re.sub(r"\s+", " ", summary)[:180]
 
-    # FULL summary for "Read more" (NEW)
+    # Full summary for "Read more"
     raw_full = e.get("summary") or e.get("description") or ""
     summary_full = re.sub(r"<.*?>", "", raw_full)
     summary_full = re.sub(r"\s+", " ", summary_full).strip()
 
-    # Cover (episode-level first)
+    # Cover image: episode first, then feed-level fallback
     cover = ""
     if "image" in e and isinstance(e.image, dict):
         cover = e.image.get("href", "")
     elif e.get("itunes_image"):
         cover = e.itunes_image.get("href", "") if isinstance(e.itunes_image, dict) else e.itunes_image
 
-    # Fallback to feed-level image
     if not cover:
         ff = getattr(feed, "feed", {})
         if isinstance(getattr(feed, "image", None), dict):
@@ -92,7 +116,15 @@ for e in feed.entries:
             im = ff["itunes_image"]
             cover = im.get("href", "") if isinstance(im, dict) else im
 
-    # Write front matter (safe single-quoted YAML)
+    # Season / Episode (prefer RSS itunes tags, fallback to title patterns)
+    s = to_int(e.get("itunes_season") or getattr(e, "itunes_season", 0))
+    ep = to_int(e.get("itunes_episode") or getattr(e, "itunes_episode", 0))
+    if s == 0 and ep == 0:
+        gs, ge = guess_nums_from_title(title)
+        s = s or gs
+        ep = ep or ge
+
+    # Write front matter
     fm = []
     fm.append("---")
     fm.append("layout: episode")
@@ -103,7 +135,6 @@ for e in feed.entries:
     if summary:
         safe_summary = summary.replace("'", "''")
         fm.append(f"excerpt: '{safe_summary}'")
-    # NEW: store full description for homepage toggle
     if summary_full:
         safe_full = summary_full.replace("'", "''")
         fm.append(f"summary_full: '{safe_full}'")
@@ -113,11 +144,15 @@ for e in feed.entries:
         fm.append(f"audio_url: '{audio}'")
     if cover:
         fm.append(f"cover: '{cover}'")
+    if s > 0:
+        fm.append(f"season: {s}")
+    if ep > 0:
+        fm.append(f"episode: {ep}")
     if guid:
         fm.append(f"guid: '{guid}'")
     fm.append("---\n")
-    body = "Imported automatically from RSS.\n"
 
+    body = "Imported automatically from RSS.\n"
     fn.write_text("\n".join(fm) + body, encoding="utf-8")
     new_count += 1
 
