@@ -23,14 +23,10 @@ When you have those thoughts…
 Handles — Walk Free This Week
 
 our simple practices to live what we just talked about, do it on purpose, and watch your mind catch up to what Jesus already finished.
-	1. Rename the Record
-When accusation hits, say out loud: “Paid in full. Canceled. Nailed. Disarmed.” (Col 2:14–15)
-	2. Rehearse the Triumph (60 seconds)
-Picture the IOU on His cross. Picture the enemy’s empty hands. Pray:
-“Jesus, You stripped the powers. I stand in Your victory.”
-	3. Release Your Testimony (one person)
-Two sentences: text or tell what Jesus already changed in you. (Rev 12:11)
-	4. Guard the Gain (10-minute rule)
-Give God the first 10 minutes: Colossians 2, prayer, and one spoken truth over your life.
+	
+	1. Rename the Record - When accusation hits, say out loud: “Paid in full. Canceled. Nailed. Disarmed.” (Col 2:14–15)
+	2. Rehearse the Triumph (60 seconds) - Picture the IOU on His cross. Picture the enemy’s empty hands. Pray: “Jesus, You stripped the powers. I stand in Your victory.”
+	3. Release Your Testimony (one person) - Two sentences: text or tell what Jesus already changed in you. (Rev 12:11)
+	4. Guard the Gain (10-minute rule) - Give God the first 10 minutes: Colossians 2, prayer, and one spoken truth over your life.
 
 
