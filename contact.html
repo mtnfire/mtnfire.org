@@ -1,0 +1,115 @@
+---
+layout: page
+title: Contact
+permalink: /contact/
+---
+
+<!-- Contact Page for mtnfire.org (Jekyll on GitHub Pages) -->
+<section class="contact">
+  <h1>Contact MTN.fire</h1>
+  <p>Prayer request, testimony, booking, collaboration, or a simple hello—drop me a note below. I read every message.</p>
+
+  <!--
+    QUICK SETUP
+    1) Create a Formspree form and copy your endpoint URL (looks like https://formspree.io/f/abcd1234).
+    2) Replace YOUR_FORMSPREE_ENDPOINT below.
+    3) Commit this page as /contact.html (or /contact.md) in your repo. Add to site nav.
+  -->
+  <form id="contactForm" action="https://formspree.io/f/mpwjqgrj" method="POST" accept-charset="UTF-8">
+    <input type="hidden" name="_subject" value="New message from mtnfire.org contact form">
+    <input type="hidden" name="form_name" value="mtnfire_contact">
+
+    <label for="name">Name<span aria-hidden="true">*</span></label>
+    <input id="name" name="name" type="text" required>
+
+    <label for="email">Email<span aria-hidden="true">*</span></label>
+    <input id="email" name="email" type="email" required>
+
+    <label for="topic">Topic</label>
+    <select id="topic" name="topic">
+      <option value="Prayer Request">Prayer Request</option>
+      <option value="Testimony">Testimony</option>
+      <option value="Booking">Booking / Speaking</option>
+      <option value="Collaboration">Collaboration</option>
+      <option value="General">General</option>
+    </select>
+
+    <label for="message">Message<span aria-hidden="true">*</span></label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+
+    <!-- Honeypot (anti-spam). Do not remove. -->
+    <label class="hp" for="website">Website</label>
+    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+
+    <button type="submit" id="submitBtn">Send</button>
+    <p id="formStatus" class="status" role="status" aria-live="polite"></p>
+    <noscript>
+      <p class="muted">JavaScript is off, so you’ll be redirected to Formspree after submitting. That’s okay—your message will still send.</p>
+    </noscript>
+  </form>
+</section>
+
+<style>
+  :root{
+    --bg:#0c0c0c; --panel:#121212; --ink:#eaeaea; --muted:#a1a1a1; --line:#2a2a2a; --accent:#f59e0b; /* warm ember */
+  }
+  .contact{max-width:720px;margin:0 auto;padding:1.5rem 1.25rem}
+  .contact h1{font-size:2rem;margin-bottom:.75rem}
+  .contact p{color:var(--muted)}
+  form{margin-top:1rem;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem}
+  label{display:block;font-weight:600;margin:.75rem 0 .25rem}
+  input,select,textarea{width:100%;background:#0e0e0e;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.75rem}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:2px}
+  button{margin-top:.9rem;display:inline-block;padding:.7rem 1rem;border-radius:12px;border:1px solid var(--line);background:var(--accent);color:#111;font-weight:700;cursor:pointer}
+  button:disabled{opacity:.6;cursor:not-allowed}
+  .status{margin-top:.75rem}
+  .muted{color:var(--muted)}
+  /* Hide honeypot visually but keep it for bots */
+  .hp{position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden}
+  #website{position:absolute;left:-9999px;top:-9999px;height:0;width:0;opacity:0}
+</style>
+
+<script>
+  (function(){
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    const btn = document.getElementById('submitBtn');
+    if(!form) return;
+
+    form.addEventListener('submit', async function(e){
+      // Progressive enhancement: if JS is enabled, stay on-page
+      e.preventDefault();
+      status.textContent = '';
+
+      // Honeypot check
+      if (document.getElementById('website').value.trim() !== '') {
+        status.textContent = 'Thanks!';
+        return; // likely a bot
+      }
+
+      btn.disabled = true;
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.reset();
+          status.textContent = 'Thanks! I’ll get back to you soon.';
+        } else {
+          const err = await res.json().catch(()=>({}));
+          status.textContent = (err && err.errors && err.errors[0] && err.errors[0].message) || 'Hmm, something went wrong. Try again in a minute or email me directly.';
+        }
+      } catch (ex) {
+        status.textContent = 'Network issue—please try again.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
+
+<!-- Optional: privacy blurb -->
+<p class="muted" style="max-width:720px;margin:1rem auto 0;padding:0 1.25rem">We’ll never share your info. Messages go directly to my inbox. If it’s urgent, use the email on the About page.</p>
