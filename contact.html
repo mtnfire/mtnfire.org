@@ -50,9 +50,117 @@ permalink: /contact/
 </section>
 
 <style>
-  /* Scoped to .contact so it won't touch other pages */
-  .contact{max-width:820px;margin:0 auto;padding:2rem 1.25rem}
-  .contact h1{font-size:clamp(1.9rem,1.2rem + 1.6vw,2.5rem);margin:0 0 .6rem}
-  .contact>p{color:#a7a7a7;margin-bottom:1.1rem}
+  /* Contact page — scoped so we don't affect other pages */
+  .contact { max-width: 880px; margin: 0 auto; padding: 2rem 1.25rem; }
+  .contact > h1 { margin: 0 0 .6rem; font-size: clamp(1.9rem, 1.2rem + 1.6vw, 2.5rem); }
+  .contact > p { color: #a7a7a7; margin-bottom: 1.2rem; }
 
-  .contact form{margin-top:1rem;background:#121212;border:1px solid #262626;border-radius:16px;p
+  .contact form {
+    margin-top: 1rem;
+    background: #121212;
+    border: 1px solid #262626;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  /* Kill conflicting theme rules */
+  .contact form *, .contact form *::before, .contact form *::after { box-sizing: border-box; }
+  .contact label { display: block !important; font-weight: 650; margin: .75rem 0 .4rem; }
+
+  .contact input,
+  .contact select,
+  .contact textarea {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: #0e0e0e;
+    color: #ececec;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: .85rem .95rem;
+    font: inherit;
+  }
+
+  .contact input:focus,
+  .contact select:focus,
+  .contact textarea:focus {
+    outline: 2px solid #f59e0b; outline-offset: 2px;
+  }
+
+  .contact button {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: .9rem 1.15rem;
+    border-radius: 14px;
+    border: 1px solid #262626;
+    background: #f59e0b;
+    color: #111;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .contact button:disabled { opacity: .6; cursor: not-allowed; }
+
+  .contact .status { margin-top: .75rem; color: #ececec; }
+  .contact .muted { color: #a7a7a7; }
+  .contact .smallprint { margin-top: 1rem; }
+
+  /* Layout */
+  .contact .grid-2 { display: grid; gap: 1rem; }
+  @media (min-width: 760px) {
+    .contact .grid-2 { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Hide honeypot but keep it in DOM for bots */
+  .contact .hp, #website {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+  }
+</style>
+
+<script>
+  (function(){
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    const btn = document.getElementById('submitBtn');
+    if(!form) return;
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      status.textContent = '';
+
+      // Honeypot: ignore bots
+      if (document.getElementById('website').value.trim() !== '') {
+        status.textContent = 'Thanks!';
+        return;
+      }
+
+      btn.disabled = true;
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.reset();
+          status.textContent = 'Thanks! I’ll get back to you soon.';
+        } else {
+          const err = await res.json().catch(()=>({}));
+          status.textContent = (err && err.errors && err.errors[0] && err.errors[0].message)
+            || 'Hmm, something went wrong. Try again in a minute or email me directly.';
+        }
+      } catch {
+        status.textContent = 'Network issue—please try again.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
