@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<article class="post">
+  <div class="wrap">
+    <header class="post-head">
+      <h1>{{ page.title }}</h1>
+      {% if page.subtitle %}
+        <p class="muted">{{ page.subtitle }}</p>
+      {% endif %}
+      {% if page.cover %}
+        <img class="post-cover" src="{{ page.cover }}" alt="">
+      {% endif %}
+    </header>
+
+    <div class="post-body prose">
+      {{ content }}
+    </div>
+  </div>
+</article>
