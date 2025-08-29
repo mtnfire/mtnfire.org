@@ -1,126 +1,38 @@
 ---
-layout: blog
+layout: page
 title: Contact
 permalink: /contact/
+subtitle: Prayer request, testimony, booking, collaboration, or a simple hello—drop me a note. I read every message.
 ---
 
-<section class="contact">
-  <p class="lede">Prayer request, testimony, booking, collaboration, or a simple hello—drop me a note below. I read every message.</p>
-
-  <form id="contactForm" action="https://formspree.io/f/mpwjqgrj" method="POST" accept-charset="UTF-8">
-    <input type="hidden" name="_subject" value="New message from mtnfire.org contact form">
-    <input type="hidden" name="form_name" value="mtnfire_contact">
-
-    <div class="grid-2">
-      <div>
-        <label for="name">Name<span aria-hidden="true">*</span></label>
-        <input id="name" name="name" type="text" required>
-      </div>
-      <div>
-        <label for="email">Email<span aria-hidden="true">*</span></label>
-        <input id="email" name="email" type="email" required>
-      </div>
+<div class="form-card">
+  <form action="https://formspree.io/f/mpwjqgrj" method="POST" class="contact-form">
+    <div class="form-grid">
+      <label>
+        <span class="label">Name*</span>
+        <input type="text" name="name" required>
+      </label>
+      <label>
+        <span class="label">Email*</span>
+        <input type="email" name="email" required>
+      </label>
     </div>
 
-    <label for="topic">Topic</label>
-    <select id="topic" name="topic">
-      <option value="Prayer Request">Prayer Request</option>
-      <option value="Testimony">Testimony</option>
-      <option value="Booking">Booking / Speaking</option>
-      <option value="Collaboration">Collaboration</option>
-      <option value="General">General</option>
-    </select>
+    <label>
+      <span class="label">Topic</span>
+      <select name="topic">
+        <option>Prayer Request</option>
+        <option>Testimony</option>
+        <option>Booking / Collaboration</option>
+        <option>General</option>
+      </select>
+    </label>
 
-    <label for="message">Message<span aria-hidden="true">*</span></label>
-    <textarea id="message" name="message" rows="6" required></textarea>
+    <label>
+      <span class="label">Message*</span>
+      <textarea name="message" rows="7" required></textarea>
+    </label>
 
-    <!-- Honeypot (anti-spam). Do not remove. -->
-    <label class="hp" for="website">Website</label>
-    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-
-    <button type="submit" id="submitBtn">Send</button>
-    <p id="formStatus" class="status" role="status" aria-live="polite"></p>
-    <noscript>
-      <p class="muted">JavaScript is off, so you’ll be redirected to Formspree after submitting. That’s okay—your message will still send.</p>
-    </noscript>
+    <button class="pill" type="submit">Send</button>
   </form>
-
-  <p class="muted smallprint">We’ll never share your info. Messages go directly to my inbox. If it’s urgent, use the email on the About page.</p>
-</section>
-
-<style>
-  /* container & intro text */
-  .contact { max-width: 880px; margin: 0 auto; padding: 1.25rem; }
-  .contact .lede { color: #a7a7a7; margin: 0 0 1rem; }
-
-  /* card */
-  .contact form {
-    margin-top: .75rem;
-    background: #121212;
-    border: 1px solid #262626;
-    border-radius: 16px;
-    padding: 1.25rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  }
-
-  /* kill theme conflicts & set tidy controls */
-  .contact form *, .contact form *::before, .contact form *::after { box-sizing: border-box; }
-  .contact label { display: block !important; font-weight: 650; margin: .75rem 0 .4rem; }
-  .contact input, .contact select, .contact textarea {
-    display: block !important; width: 100% !important; max-width: 100% !important;
-    background: #0e0e0e; color: #ececec; border: 1px solid #262626; border-radius: 12px; padding: .85rem .95rem;
-    font: inherit;
-  }
-  .contact input:focus, .contact select:focus, .contact textarea:focus { outline: 2px solid #f59e0b; outline-offset: 2px; }
-
-  .contact button {
-    margin-top: 1rem; display: inline-block; padding: .9rem 1.15rem;
-    border-radius: 14px; border: 1px solid #262626; background: #f59e0b; color: #111;
-    font-weight: 800; cursor: pointer;
-  }
-  .contact button:disabled { opacity: .6; cursor: not-allowed; }
-
-  .contact .status { margin-top: .75rem; color: #ececec; }
-  .contact .muted { color: #a7a7a7; }
-  .contact .smallprint { margin-top: 1rem; }
-
-  /* layout */
-  .contact .grid-2 { display: grid; gap: 1rem; }
-  @media (min-width: 760px) { .contact .grid-2 { grid-template-columns: 1fr 1fr; } }
-
-  /* hide honeypot but keep it in DOM */
-  .contact .hp, #website {
-    position: absolute !important; left: -9999px !important; top: -9999px !important;
-    height: 0 !important; width: 0 !important; opacity: 0 !important; overflow: hidden !important;
-  }
-</style>
-
-<script>
-  (function(){
-    const form = document.getElementById('contactForm');
-    const status = document.getElementById('formStatus');
-    const btn = document.getElementById('submitBtn');
-    if(!form) return;
-
-    form.addEventListener('submit', async function(e){
-      e.preventDefault();
-      status.textContent = '';
-
-      if (document.getElementById('website').value.trim() !== '') {
-        status.textContent = 'Thanks!'; return; // honeypot
-      }
-
-      btn.disabled = true;
-      try {
-        const data = new FormData(form);
-        const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
-        if (res.ok) { form.reset(); status.textContent = 'Thanks! I’ll get back to you soon.'; }
-        else {
-          const err = await res.json().catch(()=>({}));
-          status.textContent = (err && err.errors && err.errors[0] && err.errors[0].message) || 'Hmm, something went wrong. Try again in a minute or email me directly.';
-        }
-      } catch { status.textContent = 'Network issue—please try again.'; }
-      finally { btn.disabled = false; }
-    });
-  })();
-</script>
+</div>
