@@ -5,34 +5,42 @@ permalink: /contact/
 subtitle: Prayer request, testimony, booking, collaboration, or a simple hello—drop me a note. I read every message.
 ---
 
-<div class="form-card">
-  <form action="https://formspree.io/f/mpwjqgrj" method="POST" class="contact-form">
-    <div class="form-grid">
-      <label>
-        <span class="label">Name*</span>
-        <input type="text" name="name" required>
-      </label>
-      <label>
-        <span class="label">Email*</span>
-        <input type="email" name="email" required>
-      </label>
-    </div>
+<div class="narrow">
+  <div class="form-card">
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
 
-    <label>
-      <span class="label">Topic</span>
-      <select name="topic">
-        <option>Prayer Request</option>
-        <option>Testimony</option>
-        <option>Booking / Collaboration</option>
-        <option>General</option>
-      </select>
-    </label>
+      <div class="form-grid two">
+        <div class="field">
+          <label for="name">Name*</label>
+          <input id="name" name="name" type="text" required>
+        </div>
 
-    <label>
-      <span class="label">Message*</span>
-      <textarea name="message" rows="7" required></textarea>
-    </label>
+        <div class="field">
+          <label for="email">Email*</label>
+          <input id="email" name="email" type="email" required>
+        </div>
+      </div>
 
-    <button class="pill" type="submit">Send</button>
-  </form>
+      <div class="field">
+        <label for="topic">Topic</label>
+        <select id="topic" name="topic">
+          <option>Prayer Request</option>
+          <option>Testimony</option>
+          <option>Booking / Collaboration</option>
+          <option>General</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Message*</label>
+        <textarea id="message" name="message" rows="7" required></textarea>
+      </div>
+
+      <button class="pill" type="submit">Send</button>
+    </form>
+  </div>
+
+  <p class="muted small" style="margin-top:10px">
+    We’ll never share your info. If it’s urgent, use the email on the About page.
+  </p>
 </div>
