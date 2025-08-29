@@ -690,3 +690,11 @@ button.pill{
 
 /* Tiny text helper */
 .small { font-size: .95rem; }
+
+/* Episodes page: add space under the sticky header */
+section.episodes{
+  padding-top: clamp(28px, 5vw, 56px);   /* tweak to taste */
+}
+
+/* Keep the title snug to that padding (no extra gap stacking) */
+.episodes .section-title{ margin-top: 0; }
