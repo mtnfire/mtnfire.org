@@ -593,3 +593,47 @@ button.pill{
 /* unify page header label across layouts */
 .page-title { color: #a7a7a7; font-size: 0.95rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin: 0; }
 .page-title + hr { height:1px; border:0; background:#262626; margin: .75rem 0 1.25rem; }
+
+/* ----- Unified page & form styling ----- */
+
+/* Card wrapper so the form matches your "card" feel */
+.form-card{
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--bg);
+}
+
+/* Grid for name/email on desktop */
+.contact-form .form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 820px){
+  .contact-form .form-grid{ grid-template-columns: 1fr; }
+}
+
+/* Inputs/selects/textarea look like the filter/search controls */
+.contact-form input,
+.contact-form select,
+.contact-form textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  line-height: 1.4;
+}
+
+.contact-form .label{
+  display: inline-block;
+  font-weight: 600;
+  margin: 10px 0 6px;
+}
+.contact-form label{ display:block; }
+
+/* Keep the button style in-brand */
+.contact-form .pill{ margin-top: 10px; }
