@@ -637,3 +637,56 @@ button.pill{
 
 /* Keep the button style in-brand */
 .contact-form .pill{ margin-top: 10px; }
+
+/* Keep page content aligned with article reading width */
+.post .post-body { max-width: 720px; margin: 0 auto; }
+
+/* Optional helper to center narrower blocks */
+.narrow { max-width: 720px; margin: 0 auto; }
+
+/* Contact card */
+.form-card{
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--bg);
+}
+
+/* Fields + labels */
+.field { margin-bottom: 12px; }
+.field label{
+  display: block;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+/* Make inputs/selects/textarea full width and match site chrome */
+.contact-form input,
+.contact-form select,
+.contact-form textarea{
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  line-height: 1.4;
+}
+
+/* Two-column row for name/email on desktop */
+.form-grid.two{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 820px){
+  .form-grid.two{ grid-template-columns: 1fr; }
+}
+
+/* Button spacing */
+.contact-form .pill{ margin-top: 6px; }
+
+/* Tiny text helper */
+.small { font-size: .95rem; }
