@@ -22,16 +22,5 @@ permalink: /shop/
       </a>
     </div>
 
-    <!-- Optional featured tiles linking straight to Shopify collections/products -->
-    <div class="shop-grid">
-      <a class="shop-card" href="https://sfctnk-qm.myshopify.com/collections/all" target="_blank" rel="noopener">
-        <div class="shop-card-art"></div>
-        <div class="shop-card-body">
-          <h3>All Products</h3>
-          <p>Browse everything in one place.</p>
-        </div>
-      </a>
-
-
 
   </div>
