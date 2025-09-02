@@ -698,3 +698,43 @@ section.episodes{
 
 /* Keep the title snug to that padding (no extra gap stacking) */
 .episodes .section-title{ margin-top: 0; }
+
+/* --- Shop page (scoped) --- */
+.shop .wrap { max-width: 1100px; margin: 0 auto; }
+.shop .shop-intro { margin: 0.75rem 0 1.25rem; color: var(--fg); opacity: 0.9; }
+.shop .shop-cta { margin: 1rem 0 1.5rem; }
+.shop .btn {
+  display: inline-block; padding: 0.75rem 1.1rem; border-radius: 9999px;
+  background: var(--accent); color: #111; font-weight: 600; text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.shop .btn:hover { filter: brightness(0.95); }
+
+.shop .shop-grid {
+  display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr);
+}
+@media (max-width: 900px) {
+  .shop .shop-grid { grid-template-columns: repeat(6, 1fr); }
+}
+@media (max-width: 600px) {
+  .shop .shop-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.shop .shop-card {
+  grid-column: span 4;
+  display: flex; flex-direction: column; border-radius: 1rem; overflow: hidden;
+  background: var(--bg); border: 1px solid var(--rule); text-decoration: none; color: inherit;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.shop .shop-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+
+.shop .shop-card-art {
+  aspect-ratio: 16 / 9; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0)),
+  url('/assets/img/shop/placeholder.jpg') center/cover no-repeat;
+}
+.shop .shop-card-body { padding: 0.9rem 1rem 1rem; }
+.shop .shop-card h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.shop .shop-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+.shop .embed-tip { margin-top: 1rem; }
+.shop .embed-tip summary { cursor: pointer; color: var(--muted); }
