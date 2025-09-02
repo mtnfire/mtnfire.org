@@ -17,7 +17,7 @@ permalink: /shop/
 
     <!-- Primary CTA to your Shopify storefront -->
     <div class="shop-cta">
-      <a class="btn" href="https://sfctnk-qm.myshopify.com/" rel="noopener" target="_blank">
+      <a class="btn" href="https://mtnire.myshopify.com/collections/all" rel="noopener" target="_blank">
         Open the Shop
       </a>
     </div>
