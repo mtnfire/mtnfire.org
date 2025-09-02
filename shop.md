@@ -33,11 +33,5 @@ permalink: /shop/
       </a>
 
 
-    <!-- Placeholder for future embedded Buy Button (Shopify) -->
-    <details class="embed-tip">
-      <summary>Want the products embedded right on this page?</summary>
-      <p>In Shopify, go to <em>Sales channels → Buy Button</em>, generate a Buy Button for a product or collection,
-      and paste the code below this line. It will load the Shopify BuyButton.js script and render the grid here—no reloads needed.</p>
-    </details>
+
   </div>
-</section>
