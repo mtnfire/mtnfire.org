@@ -52,7 +52,7 @@ What’s my one fuel?
 
 What’s my one windbreak?
 
-What’s my one stir?
+What’s my one act?
 
 Write them down. Act on them. Let the flame keep burning.
 
