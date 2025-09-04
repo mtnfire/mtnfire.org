@@ -1,7 +1,7 @@
 ---
 layout: blog
 title: "Why I’m Adding a Blog"
-date: 2025-08-28
+date: 2025-08-27
 categories: [blog]
 excerpt: "A quick intro to the MTN.fire blog—what I’ll share here and how it complements the podcast."
 # cover: /assets/img/blog-intro.jpg   # optional – add an image or remove this line
