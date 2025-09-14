@@ -1,6 +1,6 @@
 ---
 layout: blog
-title: "Who Names You?"
+title: "What A Week!"
 date: 2025-09-13
 categories: [blog]
 excerpt: Tell Someone About Jesus This Weekend. 
