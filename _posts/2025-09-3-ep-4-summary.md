@@ -9,7 +9,7 @@ cover: /assets/img/fire.png
 
 Keep The Fire
 
-Campfires don’t die in a flash—they fade inch by inch when nobody tends them. Same with your soul.
+Campfires don’t die in a flash—they fade inch by inch when nobody tends them. 
 
 On March 31st, Jesus healed me. PTSD, anxiety, depression—gone. I walked out of that church lighter than I’d been in years. But the very next morning I realized something: fires don’t stay lit by accident. If I didn’t feed this, it would fade—not because God is weak, but because neglect is a wet blanket.
 

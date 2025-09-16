@@ -3,7 +3,7 @@ layout: blog
 title: "The Anchor Holds"
 date: 2025-09-16
 categories: [blog]
-excerpt:  Storms will test what you’re anchored to. Distractions, people, even pain itself can’t hold you steady. But Hebrews 6:19 says we have a *“sure and steadfast anchor of the soul.”* In this post, I share how Jesus became that Anchor when every other rope in my life gave way.  
+excerpt:  Storms will test what you’re anchored to. Jesus is my anchor. 
 cover: /assets/img/anchor.png
 ---
 Life has a way of rocking us. Storms rise, waves crash, and sometimes it feels like everything we’ve tied ourselves to is breaking loose.  
