@@ -3,7 +3,7 @@ layout: blog
 title: "The Cross Is Enough"
 date: 2025-08-29
 categories: [blog]
-excerpt: "A Quick summary and overview of EP.3"
+excerpt: "You think your past disqualifies you? You think the chain around your neck is too heavy to break? The cross says otherwise."
 cover: /assets/img/cross.png
 ---
 
