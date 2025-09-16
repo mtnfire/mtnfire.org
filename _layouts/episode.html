@@ -32,37 +32,37 @@ layout: default
   <!-- Body (full description + actions) -->
   <div class="wrap ep-body">
     {% comment %}
-      Prefer Markdown body if present (hand-edited posts).
-      Otherwise use RSS <description> (already HTML).
-      If missing, fallback to iTunes/Apple fields (often entity-escaped HTML)
-      and unescape basic entities before rendering.
+      Prefer Markdown body if present.
+      Otherwise, pick first non-empty among common RSS fields, unescaping HTML entities if needed.
     {% endcomment %}
 
     {%- assign body_md = content | replace: 'Imported automatically from RSS.', '' | strip -%}
-    {%- if body_md -%}
+    {%- assign final = '' -%}
+
+    {%- if body_md != '' -%}
       {%- assign final = body_md | markdownify -%}
     {%- else -%}
-      {%- assign html = page.description
-        | default: page.description_html
-        | default: page.content_html
-        | default: page.content -%}
-      {%- if html -%}
-        {%- assign final = html -%}
-      {%- else -%}
-        {%- assign itunes = page.itunes_summary
-          | default: page.long_summary
-          | default: page.subtitle
-          | default: page.itunes_subtitle -%}
-        {%- if itunes -%}
-          {%- assign unescaped = itunes
-            | replace: '&lt;','<'
-            | replace: '&gt;','>'
-            | replace: '&amp;','&'
-            | replace: '&quot;','"'
-            | replace: '&#39;', "'" -%}
-          {%- assign final = unescaped -%}
+      {%- assign keys = "description|description_html|content_html|content|summary|itunes_summary|long_summary|subtitle|itunes_subtitle|encoded|encoded_content|content_encoded|summary_html" | split: "|" -%}
+      {%- assign picked = '' -%}
+      {%- for k in keys -%}
+        {%- assign v = page[k] -%}
+        {%- if picked == '' and v and v != '' -%}
+          {%- assign picked = v -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if picked != '' -%}
+        {%- assign unescaped = picked
+          | replace: '&lt;','<'
+          | replace: '&gt;','>'
+          | replace: '&amp;','&'
+          | replace: '&quot;','"'
+          | replace: '&#39;', "'" -%}
+
+        {%- if unescaped contains '<' -%}
+          {%- assign final = unescaped -%}  {# already HTML #}
         {%- else -%}
-          {%- assign final = '' -%}
+          {%- assign final = unescaped | markdownify -%}
         {%- endif -%}
       {%- endif -%}
     {%- endif -%}
@@ -103,15 +103,13 @@ layout: default
         const original = btn.textContent;
         btn.textContent = 'Link copied!';
         setTimeout(() => (btn.textContent = original), 1400);
-      } catch (_) {
-        // swallow
-      }
+      } catch (_) {}
     }
 
     btn.addEventListener('click', async () => {
       if (navigator.share) {
         try { await navigator.share({ title, url }); }
-        catch (_) { /* user cancelled */ }
+        catch (_) {}
       } else {
         fallbackCopy();
       }
