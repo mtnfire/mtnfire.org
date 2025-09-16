@@ -32,16 +32,43 @@ layout: default
   <!-- Body (full description + actions) -->
   <div class="wrap ep-body">
     {% comment %}
-      Prefer full content. Strip the old placeholder if it exists.
-      Fallback to description/excerpt if content is empty.
+      Prefer Markdown body if present (hand-edited posts).
+      Otherwise use RSS <description> (already HTML).
+      If missing, fallback to iTunes/Apple fields (often entity-escaped HTML)
+      and unescape basic entities before rendering.
     {% endcomment %}
-    {% assign cleaned = content | replace: 'Imported automatically from RSS.', '' | strip %}
-    {% if cleaned == '' %}
-      {% assign cleaned = page.description | default: page.excerpt | default: '' %}
-    {% endif %}
+
+    {%- assign body_md = content | replace: 'Imported automatically from RSS.', '' | strip -%}
+    {%- if body_md -%}
+      {%- assign final = body_md | markdownify -%}
+    {%- else -%}
+      {%- assign html = page.description
+        | default: page.description_html
+        | default: page.content_html
+        | default: page.content -%}
+      {%- if html -%}
+        {%- assign final = html -%}
+      {%- else -%}
+        {%- assign itunes = page.itunes_summary
+          | default: page.long_summary
+          | default: page.subtitle
+          | default: page.itunes_subtitle -%}
+        {%- if itunes -%}
+          {%- assign unescaped = itunes
+            | replace: '&lt;','<'
+            | replace: '&gt;','>'
+            | replace: '&amp;','&'
+            | replace: '&quot;','"'
+            | replace: '&#39;', "'" -%}
+          {%- assign final = unescaped -%}
+        {%- else -%}
+          {%- assign final = '' -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
 
     <div class="prose ep-prose">
-      {{ cleaned | markdownify }}
+      {{ final }}
     </div>
 
     <!-- Actions: one Share button + your existing platform icons -->
