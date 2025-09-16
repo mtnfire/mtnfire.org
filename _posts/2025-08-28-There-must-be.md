@@ -3,7 +3,7 @@ layout: blog
 title: "There must be a correlation between what we believe and how we behave"
 categories: [blog]
 # Optional extras:
-# cover: /assets/img/blog/why-blog.jpg   # shown at top + OG image
+cover: /assets/img/pb1.png   
 excerpt: "prayer should be our first response, not our last resort."
 # tags: [update, devotional]
 ---
