@@ -4,7 +4,7 @@ title: "The Cross Is Enough"
 date: 2025-08-29
 categories: [blog]
 excerpt: "A Quick summary and overview of EP.3"
-# cover: /assets/img/blog-intro.jpg   # optional – add an image or remove this line
+cover: /assets/img/cross.png
 ---
 
 Episode 3 of MTN.fire, titled "The Cross Is Enough," focuses on living in freedom after overcoming past struggles. The episode begins with a recap of previous episodes, emphasizing the cost of compromise and the importance of protecting what has been reclaimed. It then delves into Colossians 2:14-15, explaining how Jesus' sacrifice canceled our debts and disarmed the enemy. Matt shares a personal story of overcoming shame and temptation by declaring the truth of Jesus' victory. The episode also draws a parallel with the story of Barabbas, highlighting the concept of substitution and the power of testimony. Practical steps for renewing the mind and living in freedom are provided, including recognizing and replacing lies with truth, sharing testimonies, and maintaining spiritual practices. The episode concludes with an invitation to accept Jesus' freedom, and a prayer of freedom.

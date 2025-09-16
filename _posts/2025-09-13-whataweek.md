@@ -4,7 +4,7 @@ title: "What A Week!"
 date: 2025-09-13
 categories: [blog]
 excerpt: Tell Someone About Jesus This Weekend. 
-#cover: /assets/img/weekendjesus.png  
+cover: /assets/img/weekendjesus.png  
 ---
 This week has been heavy. Not just because of headlines or what’s trending, but because you can feel the weight of hurt, anger, and division everywhere you look.
 

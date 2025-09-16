@@ -4,7 +4,7 @@ title: "Keep The Fire"
 date: 2025-09-03
 categories: [blog]
 excerpt: Fires don’t die in a flash—they fade when nobody tends them. Same with your soul. 
-  # cover: /assets/img/blog-intro.jpg   # optional – add an image or remove this line
+cover: /assets/img/fire.png
 ---
 
 Keep The Fire
