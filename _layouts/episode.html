@@ -32,19 +32,68 @@ layout: default
   <!-- Body (full description + actions) -->
   <div class="wrap ep-body">
     {% comment %}
-      Prefer full content. Strip the old placeholder if it exists.
-      Fallback to description/excerpt if content is empty.
+      Prefer Markdown body if you hand-edit a post.
+      Otherwise, pick first non-empty among a wide set of RSS-importer keys.
+      We try colon-keys (itunes:summary, content:encoded) AND snake_case fallbacks.
+      If the chosen value is entity-escaped HTML, unescape it before rendering.
     {% endcomment %}
-    {% assign cleaned = content | replace: 'Imported automatically from RSS.', '' | strip %}
-    {% if cleaned == '' %}
-      {% assign cleaned = page.description | default: page.excerpt | default: '' %}
-    {% endif %}
+
+    {%- assign body_md = content | replace: 'Imported automatically from RSS.', '' | strip -%}
+    {%- assign final = '' -%}
+
+    {%- if body_md != '' -%}
+      {%- assign final = body_md | markdownify -%}
+    {%- else -%}
+      {%- assign try_keys = "
+        description|
+        description_html|
+        content_html|
+        content|
+        summary|
+        itunes:summary|
+        itunes_summary|
+        long_summary|
+        subtitle|
+        itunes:subtitle|
+        itunes_subtitle|
+        content:encoded|
+        content_encoded|
+        encoded|
+        encoded_content|
+        summary_html
+      " | replace: " ", "" | split: "|" -%}
+
+      {%- assign picked = '' -%}
+      {%- for k in try_keys -%}
+        {%- assign v = page[k] -%} {# bracket access works for colon keys #}
+        {%- if picked == '' and v and v != '' -%}
+          {%- assign picked = v -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if picked != '' -%}
+        {%- comment -%} Unescape if it looks like entity-escaped HTML (e.g., &lt;p&gt;...) {%- endcomment -%}
+        {%- assign unescaped = picked
+          | replace: '&lt;', '<'
+          | replace: '&gt;', '>'
+          | replace: '&amp;', '&'
+          | replace: '&quot;', '"'
+          | replace: '&#39;', "'"
+        -%}
+
+        {%- if unescaped contains '<' -%}
+          {%- assign final = unescaped -%} {# already HTML #}
+        {%- else -%}
+          {%- assign final = unescaped | markdownify -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
 
     <div class="prose ep-prose">
-      {{ cleaned | markdownify }}
+      {{ final }}
     </div>
 
-    <!-- Actions: one Share button + your existing platform icons -->
+    <!-- Actions -->
     <div class="ep-actions">
       <button
         class="pill outline share-btn"
@@ -54,37 +103,31 @@ layout: default
       >
         Share
       </button>
-
       {% include social-icons.html %}
     </div>
   </div>
 </section>
 
 <script>
-  // Single "Share" button: uses Web Share API when available,
-  // falls back to copying the URL to the clipboard.
+  // Single "Share" button: Web Share API with clipboard fallback.
   (function () {
     const btn = document.querySelector('.share-btn');
     if (!btn) return;
-
     const url = btn.dataset.url || location.href;
     const title = btn.dataset.title || document.title;
 
     async function fallbackCopy() {
       try {
         await navigator.clipboard.writeText(url);
-        const original = btn.textContent;
+        const t = btn.textContent;
         btn.textContent = 'Link copied!';
-        setTimeout(() => (btn.textContent = original), 1400);
-      } catch (_) {
-        // swallow
-      }
+        setTimeout(() => (btn.textContent = t), 1400);
+      } catch {}
     }
 
     btn.addEventListener('click', async () => {
       if (navigator.share) {
-        try { await navigator.share({ title, url }); }
-        catch (_) { /* user cancelled */ }
+        try { await navigator.share({ title, url }); } catch {}
       } else {
         fallbackCopy();
       }
