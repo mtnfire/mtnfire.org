@@ -6,9 +6,20 @@ layout: default
     <header class="post-head">
       <h1>{{ page.title }}</h1>
       <p class="muted">{{ page.date | date: "%B %-d, %Y" }}</p>
-      {% if page.cover %}
-        <img class="post-cover" src="{{ page.cover }}" alt="{{ page.title }} cover">
-      {% endif %}
+     {% if page.cover %}
+  <img
+    class="post-cover"
+    src="{{ page.cover }}"
+    alt="{{ page.title }} cover"
+    style="
+      display:block;
+      margin:2rem auto;
+      width:100%;
+      max-width:480px;   /* <- adjust this for how small you want it (e.g., 600px, 680px) */
+      border-radius:8px; /* optional */
+    "
+  >
+{% endif %}
     </header>
 
     <div class="post-body prose">
