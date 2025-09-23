@@ -1,7 +1,7 @@
 ---
 layout: blog
 title: "⚔️ Don’t Focus on the Individual"
-date: 2025-09-23
+date: 2025-09-22
 categories: [blog]
 excerpt: Don’t focus on the individual, focus on the darkness that made that individual evil.
 cover: /assets/img/dontfocus.png
