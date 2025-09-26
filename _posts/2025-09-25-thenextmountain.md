@@ -1,6 +1,6 @@
 ---
 layout: blog
-title: "What The Fire Burns Away"
+title: "The Next Mountain"
 date: 2025-09-25
 categories: [blog]
 excerpt:  Fire doesn’t just destroy — it refines. Gold isn’t proven in comfort, it’s proven in the flames. 
