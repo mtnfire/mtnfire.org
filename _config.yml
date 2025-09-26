@@ -2,6 +2,7 @@ title: "MTN.fire"
 description: "Testimony. Fire. Hope. A podcast carrying the fire of God into everyday life."
 author: "Matt Culbertson"
 timezone: America/New_York
+future: true   # allow posts with future dates to be published
 
 # Preview values (GitHub Pages preview)
 url: https://mtnfire.org
