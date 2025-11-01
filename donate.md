@@ -1,16 +1,16 @@
 ---
 layout: page
-title: Support the Mission
+title: Fuel The Fire 🔥
 permalink: /donate/
 ---
 
 <section class="donate">
-  <h2 class="section-label">🔥 Fuel the Fire</h2>
+  <h2 class="section-label">🔥 Support The Mission 🔥</h2>
   <hr class="section-rule">
 
   <p>
-    <strong>MTN.fire</strong> isn’t a brand — it’s a testimony in motion.  
-    Every episode, post, and design exists to share the fire of Jesus — the kind that restores hope, breaks chains, and sets hearts ablaze again.
+    <strong>MTN.fire</strong> isn’t a brand - it’s a testimony in motion.  
+    Every episode, post, and design exists to share the fire of Jesus, the kind that restores hope, breaks chains, and sets hearts ablaze again.
   </p>
 
   <p>
@@ -33,14 +33,11 @@ permalink: /donate/
   </div>
 
   <p>
-    Your support helps cover production, hosting, design, and outreach costs —  
+    Your support helps cover production, hosting, design, and outreach costs -  
     but more than that, it helps share the message of redemption and hope to people who need it most.
   </p>
 
-  <p>
-    You can also visit <a href="https://www.buymeacoffee.com/mtn.fire" target="_blank">my Buy Me a Coffee page</a>  
-    for behind-the-scenes updates, extra content, and more ways to connect.
-  </p>
+
 
   <p>
     Thank you for helping spread the fire. 🙌  
