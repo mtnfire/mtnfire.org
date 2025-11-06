@@ -16,8 +16,12 @@ permalink: /episodes/
       <button id="collapse-all" class="pill outline" type="button">Collapse all</button>
     </div>
 
-    {%- assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" -%}
-    {%- assign eps_sorted = eps | sort: "date" | reverse -%}
+{%- assign eps = site.posts
+  | where_exp: "p", "p.categories contains 'episodes'"
+  | where_exp: "p", "(p.season | default: p.itunes_season | default: p.itunes.season | default: 0 | plus: 0) != 99"
+  | sort: "date" | reverse
+-%}
+
 
     {%- comment -%}
       Group by season. We defensively check several keys and coerce to a number.
