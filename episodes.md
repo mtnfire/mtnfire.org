@@ -18,9 +18,10 @@ permalink: /episodes/
 
 {%- assign eps = site.posts
   | where_exp: "p", "p.categories contains 'episodes'"
-  | where_exp: "p", "(p.season | default: p.itunes_season | default: p.itunes.season | default: 0 | plus: 0) != 99"
+  | where_exp: "p", "(p.season == 99 or p.season == '99' or p.itunes_season == 99 or p.itunes_season == '99' or p.itunes.season == 99 or p.itunes.season == '99') == false"
   | sort: "date" | reverse
 -%}
+
 
 
     {%- comment -%}
