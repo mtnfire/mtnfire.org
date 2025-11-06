@@ -16,13 +16,8 @@ permalink: /episodes/
       <button id="collapse-all" class="pill outline" type="button">Collapse all</button>
     </div>
 
-{%- assign eps = site.posts
-  | where_exp: "p", "p.categories contains 'episodes'"
-  | where_exp: "p", "(p.season == 99 or p.season == '99' or p.itunes_season == 99 or p.itunes_season == '99' or p.itunes.season == 99 or p.itunes.season == '99') == false"
-  | sort: "date" | reverse
--%}
-
-
+    {%- assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" -%}
+    {%- assign eps_sorted = eps | sort: "date" | reverse -%}
 
     {%- comment -%}
       Group by season. We defensively check several keys and coerce to a number.
@@ -34,6 +29,7 @@ permalink: /episodes/
     {%- assign groups_desc = groups | sort: "name" | reverse -%}
 
     {%- for g in groups_desc -%}
+      {%- unless g.name == 99 or g.name == '99' -%}
       <details class="season" data-season="{{ g.name }}" {% if forloop.first and g.name != 0 %}open{% endif %}>
         <summary>
           <span class="season-title">
@@ -72,6 +68,7 @@ permalink: /episodes/
           {%- endfor -%}
         </div>
       </details>
+      {%- endunless -%}
     {%- endfor -%}
   </div>
 </section>
