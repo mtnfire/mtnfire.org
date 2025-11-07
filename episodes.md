@@ -30,7 +30,8 @@ permalink: /episodes/
 
     {%- for g in groups_desc -%}
       {%- unless g.name == 99 or g.name == '99' -%}
-      <details class="season" data-season="{{ g.name }}" {% if forloop.first and g.name != 0 %}open{% endif %}>
+    <details class="season" data-season="{{ g.name }}" {% if forloop.first %}open{% endif %}>
+
         <summary>
           <span class="season-title">
             {% if g.name == 0 %}Other{% else %}Season {{ g.name }}{% endif %}
