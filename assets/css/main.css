@@ -1313,3 +1313,59 @@ nav.site-nav {
   opacity: 1;
   pointer-events: auto;
 }
+/* ===== MTN.fire header — FINAL LOCK ===== */
+
+/* Hide the checkbox everywhere (keeps toggle logic) */
+.mf-header .mf-nav-check {
+  position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; pointer-events: none;
+}
+
+/* DESKTOP / BASE (>=769px) ----------------------------------------------- */
+.mf-header { position: sticky; top: 0; z-index: 50; background: var(--bg,#0b0b0b); }
+.mf-header .header-bar { position: relative; display: flex; justify-content: flex-end; align-items: center; min-height: 56px; padding: 8px 16px; }
+
+/* ALWAYS show nav + socials on desktop */
+.mf-header .nav-right { display: flex !important; align-items: center !important; gap: 1.25rem !important; }
+.mf-header .nav-links { 
+  display: flex !important; 
+  position: static !important; 
+  transform: none !important; 
+  flex-direction: row !important; 
+  gap: 1rem !important; 
+  white-space: nowrap;
+}
+.mf-header .nav-links a { text-decoration: none; opacity: .9; }
+.mf-header .nav-links a:hover { opacity: 1; }
+.mf-header .nav-social { display: flex !important; align-items: center; gap: .5rem; }
+
+/* Never show burger on desktop */
+.mf-header .mf-nav-burger { display: none !important; }
+
+/* MOBILE (<=768px) -------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* show burger, hide socials */
+  .mf-header .mf-nav-burger{
+    display: flex !important; cursor: pointer; width: 36px; height: 28px;
+    position: absolute; right: 12px; top: 14px; z-index: 1001; align-items: center; justify-content: center;
+  }
+  .mf-header .mf-nav-burger span{ display:block; width:26px; height:2px; background:#e5e5e5; margin:5px 0; border-radius:2px; }
+  .mf-header .nav-social{ display: none !important; }
+
+  /* collapse nav into full-screen overlay (hidden by default) */
+  .mf-header .nav-links{
+    position: fixed !important; inset: 0 0 0 0;
+    display: none !important;
+    flex-direction: column !important; justify-content: center; align-items: center;
+    gap: 1.2rem; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+    z-index: 999; opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .mf-header .nav-links a{ color:#fff; font-size:1.2rem; opacity:.95; }
+
+  /* open/close with the (hidden) checkbox */
+  .mf-header .mf-nav-check:checked ~ .nav-right .nav-links{
+    display: flex !important; opacity: 1; pointer-events: auto;
+  }
+
+  /* header spacing for the burger */
+  .mf-header .header-bar{ min-height: 54px; padding: 12px 8px; }
+}
