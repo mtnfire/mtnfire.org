@@ -738,3 +738,51 @@ section.episodes{
 
 .shop .embed-tip { margin-top: 1rem; }
 .shop .embed-tip summary { cursor: pointer; color: var(--muted); }
+
+/* ===== Mobile header/hero compaction ===== */
+@media (max-width: 640px) {
+  /* Keep header slim & consistent (~56px) */
+  .site-header {
+    position: sticky; top: 0; z-index: 1000;
+    padding: 8px 12px;
+    min-height: 56px;
+    background: var(--bg); /* ensure solid bg under notch */
+    padding-top: calc(8px + env(safe-area-inset-top));
+    box-shadow: 0 1px 0 var(--rule);
+  }
+
+  /* Brand text sizing in header */
+  .site-title { font-size: 22px; line-height: 1; }
+  .site-subtitle { font-size: 12px; opacity: .85; }
+
+  /* Header nav spacing */
+  .site-nav { gap: 12px; }
+  .site-nav a { padding: 6px 4px; }
+
+  /* If you show social icons in header on mobile, keep them small */
+  .nav-social { display: none; }       /* per your blueprint: hidden on mobile */
+  .social-rail { display: block; }     /* floating rail handles socials */
+
+  /* Hero block under header */
+  .hero { padding-top: 10px; padding-bottom: 12px; }
+  .hero .wrap { align-items: center; }
+
+  /* Logo size in hero (the square badge) */
+  .hero .logo, .hero .logo img {
+    width: 84px; height: auto; border-radius: 12px;
+  }
+
+  /* Kill the big “logo card” if you’re using one */
+  .hero .logo-card { display: none; }
+
+  /* Section title (“LATEST EPISODE”) size & spacing */
+  .section-title {
+    font-size: 13px;
+    letter-spacing: .08em;
+    margin: 10px 0 8px;
+  }
+
+  /* Reduce extra top margin that may push content down */
+  .wrap { margin-top: 0; }
+}
+
