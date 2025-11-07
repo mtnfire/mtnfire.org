@@ -24,10 +24,10 @@
 
 
 <header class="site-header mf-header">
-  <div class="header-bar">
-    <!-- Right side: Desktop row -->
-    <div class="nav-right desktop-only">
-      <nav class="nav-links">
+  <div class="mf-bar">
+    <!-- Desktop row (right-aligned) -->
+    <div class="mf-right mf-desktop">
+      <nav class="mf-links">
         <a href="/about/">About</a>
         <a href="/blog/">Blog</a>
         <a href="/contact/">Contact</a>
@@ -36,24 +36,25 @@
         <a href="/firesides/">Fireside</a>
         <a href="/shop/">Shop</a>
       </nav>
-      <div class="nav-social">{% include social-icons.html %}</div>
+      <div class="mf-social">{% include social-icons.html %}</div>
     </div>
 
-    <!-- Mobile: native toggle (no JS) -->
-    <details class="mf-menu mobile-only">
+    <!-- Mobile summary menu (no JS) -->
+    <details class="mf-menu mf-mobile">
       <summary>Menu</summary>
-      <nav class="nav-list">
+      <nav class="mf-list">
         <a href="/about/">About</a>
         <a href="/blog/">Blog</a>
         <a href="/contact/">Contact</a>
         <a href="/donate/">Donate</a>
         <a href="/episodes/">Episodes</a>
-        <a href="/fireside/">Fireside</a>
+        <a href="/firesides/">Fireside</a>
         <a href="/shop/">Shop</a>
       </nav>
     </details>
   </div>
 </header>
+
 
 
 
