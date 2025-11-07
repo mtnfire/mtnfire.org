@@ -998,3 +998,7 @@ section.episodes{
   color: #fff;
   z-index: 10000;
 }
+/* Hide the MTN.fire logo text link in header */
+a.logo {
+  display: none !important;
+}
