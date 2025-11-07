@@ -1084,3 +1084,69 @@ nav.site-nav {
   /* If you prefer to hide header socials on mobile because you already have a floating rail: */
   .nav-social { display: none; }
 }
+/* =========================
+   MTN.fire Header v3 — Right-Aligned
+   ========================= */
+
+.mf-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg, #0b0b0b);
+}
+
+/* Main row */
+.mf-header .header-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 56px;
+  padding: 8px 16px;
+}
+
+/* Right-side wrapper */
+.mf-header .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Nav links */
+.mf-header .nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.mf-header .nav-links a {
+  text-decoration: none;
+  opacity: .9;
+}
+.mf-header .nav-links a:hover {
+  opacity: 1;
+}
+
+/* Socials */
+.mf-header .nav-social {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .mf-header .header-bar {
+    justify-content: center;
+  }
+
+  .mf-header .nav-right {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .75rem;
+  }
+
+  /* Optionally hide header socials on mobile */
+  .mf-header .nav-social {
+    display: none;
+  }
+}
