@@ -21,11 +21,26 @@ title: MTN.fire
   </div>
 </section>
 
-<!-- Latest only (no full list on the homepage) -->
+<!-- Latest Episode (excludes Season 99) -->
 <section class="latest">
   <div class="wrap">
     <h2 class="section-title">Latest Episode</h2>
-    {% assign latest = site.posts | where_exp: "p", "p.categories contains 'episodes'" | first %}
+
+    {%- assign eps = site.posts | where_exp: "p", "p.categories contains 'episodes'" | sort: "date" | reverse -%}
+
+    {%- assign latest = nil -%}
+    {%- assign fireside = nil -%}
+
+    {%- for post in eps -%}
+      {%- assign s = post.season | default: post.itunes_season | default: post.itunes.season | plus: 0 -%}
+      {%- if latest == nil and s != 99 -%}
+        {%- assign latest = post -%}
+      {%- elsif fireside == nil and s == 99 -%}
+        {%- assign fireside = post -%}
+      {%- endif -%}
+      {%- if latest and fireside -%}{%- break -%}{%- endif -%}
+    {%- endfor -%}
+
     {% if latest %}
       <article class="feature">
         <div class="feature-info">
@@ -33,36 +48,30 @@ title: MTN.fire
           <p class="muted">
             {{ latest.date | date: "%B %-d, %Y" }}{% if latest.duration %} · {{ latest.duration }}{% endif %}
           </p>
+          <p>{{ latest.excerpt | strip_html | truncate: 180 }}</p>
 
-          {%- assign short = latest.excerpt | strip_html | strip -%}
-          {%- assign full  = latest.summary_full | default: short -%}
-
-        <div class="desc">
-  <p class="latest-short">{{ short }}</p>
-  {% if full != short %}
-    <details class="more" id="latest-more">
-      <summary><span class="toggle-label">Show more</span></summary>
-      <div class="latest-full">
-        <p>{{ full }}</p>
-      </div>
-    </details>
-  {% endif %}
-</div>
-
-
-          <div class="player">
-            {% if latest.audio_url %}
-              <audio controls preload="none" src="{{ latest.audio_url }}"></audio>
-            {% endif %}
-          </div>
+          {% if latest.audio_url %}
+            <audio controls preload="none" src="{{ latest.audio_url }}" style="width:100%; margin-top:1rem;"></audio>
+          {% endif %}
         </div>
-
-        {% if latest.cover %}
-          <img class="feature-cover" src="{{ latest.cover }}" alt="Cover">
-        {% endif %}
       </article>
-    {% else %}
-      <p class="muted">No episodes yet. Add one in <code>_posts/</code>.</p>
+    {% endif %}
+
+    {% if fireside %}
+      <article class="feature fireside" style="margin-top:2.5rem;">
+        <h2 class="section-title">🔥 Latest Fireside Chat</h2>
+        <div class="feature-info">
+          <h3><a href="{{ fireside.url | relative_url }}">{{ fireside.title }}</a></h3>
+          <p class="muted">
+            {{ fireside.date | date: "%B %-d, %Y" }}{% if fireside.duration %} · {{ fireside.duration }}{% endif %}
+          </p>
+          <p>{{ fireside.excerpt | strip_html | truncate: 180 }}</p>
+
+          {% if fireside.audio_url %}
+            <audio controls preload="none" src="{{ fireside.audio_url }}" style="width:100%; margin-top:1rem;"></audio>
+          {% endif %}
+        </div>
+      </article>
     {% endif %}
   </div>
 </section>
