@@ -1150,3 +1150,31 @@ nav.site-nav {
     display: none;
   }
 }
+/* --- Mobile nav fix: single-line, swipeable tabs --- */
+@media (max-width: 768px) {
+  .mf-header .header-bar {
+    justify-content: flex-start;      /* start at left so swipe feels natural */
+    padding: 8px 12px;
+  }
+
+  /* Hide header socials (you already have the floating rail) */
+  .mf-header .nav-social { display: none !important; }
+
+  /* Keep all links on ONE line; enable horizontal scroll */
+  .mf-header .nav-links {
+    display: flex !important;
+    gap: 0.875rem !important;
+    white-space: nowrap !important;   /* no wrapping */
+    overflow-x: auto !important;      /* swipe to see more */
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;              /* avoid clipping descenders */
+    max-width: 100%;
+  }
+
+  /* Hide scrollbars for a cleaner look */
+  .mf-header .nav-links::-webkit-scrollbar { display: none; }
+  .mf-header .nav-links { scrollbar-width: none; }
+
+  /* Optional: slightly smaller type to fit better */
+  .mf-header .nav-links a { font-size: 0.95rem; }
+}
