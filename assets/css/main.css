@@ -1178,3 +1178,38 @@ nav.site-nav {
   /* Optional: slightly smaller type to fit better */
   .mf-header .nav-links a { font-size: 0.95rem; }
 }
+/* --- Mobile header scroll fix (iOS safe) --- */
+@media (max-width: 768px) {
+  /* ensure parent doesn't clip */
+  .mf-header,
+  .mf-header .header-bar {
+    overflow: visible !important;
+  }
+
+  /* enable real horizontal scroll area */
+  .mf-header .nav-links {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 0.875rem !important;
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0 12px 4px 12px;
+  }
+
+  /* hide scrollbars for a cleaner look */
+  .mf-header .nav-links::-webkit-scrollbar { display: none; }
+  .mf-header .nav-links { scrollbar-width: none; }
+
+  /* keep header socials hidden on mobile */
+  .mf-header .nav-social { display: none !important; }
+
+  /* slightly smaller font for tighter fit */
+  .mf-header .nav-links a {
+    font-size: 0.95rem !important;
+  }
+}
