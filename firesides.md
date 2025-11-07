@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Fireside Chats
-permalink: /fireside/
+permalink: /firesides/
 ---
 
 <section class="episodes">
