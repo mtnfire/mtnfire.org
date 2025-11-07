@@ -944,9 +944,25 @@ section.episodes{
 .hero .logo {
   max-width: 100%;
   height: auto;
-}
-/* ===== Hide top-left MTN.fire link in header ===== */
+}/* Remove the left brand link/text in the header */
 .site-header .site-title,
-.site-header .site-title a {
+.site-header .brand,
+.site-header .logo,
+.site-header a.site-title,
+.site-header .nav a.site-title,
+.site-header .nav .brand,
+.site-header .nav .logo,
+.site-header a[href="/"],
+.site-header a[href="{{ '/' | relative_url }}"] {
   display: none !important;
+}
+
+/* Re-flow the remaining nav items nicely on mobile */
+.site-header .nav,
+.site-header .site-nav,
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  justify-content: flex-start;   /* change to center if you want centered links */
 }
