@@ -25,27 +25,33 @@
 
 <header class="site-header mf-header">
   <div class="header-bar">
-    <!-- Mobile hamburger (CSS-only) -->
-    <input id="mf-nav-check" class="mf-nav-check" type="checkbox" aria-label="Toggle navigation">
-    <label for="mf-nav-check" class="mf-nav-burger" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </label>
-
-    <!-- Right side content -->
-    <div class="nav-right">
+    <!-- Right side: Desktop row -->
+    <div class="nav-right desktop-only">
       <nav class="nav-links">
         <a href="/about/">About</a>
         <a href="/blog/">Blog</a>
         <a href="/contact/">Contact</a>
         <a href="/donate/">Donate</a>
         <a href="/episodes/">Episodes</a>
-        <a href="/firesides/">Fireside</a>
+        <a href="/fireside/">Fireside</a>
         <a href="/shop/">Shop</a>
       </nav>
-      <div class="nav-social">
-        {% include social-icons.html %}
-      </div>
+      <div class="nav-social">{% include social-icons.html %}</div>
     </div>
+
+    <!-- Mobile: native toggle (no JS) -->
+    <details class="mf-menu mobile-only">
+      <summary>Menu</summary>
+      <nav class="nav-list">
+        <a href="/about/">About</a>
+        <a href="/blog/">Blog</a>
+        <a href="/contact/">Contact</a>
+        <a href="/donate/">Donate</a>
+        <a href="/episodes/">Episodes</a>
+        <a href="/fireside/">Fireside</a>
+        <a href="/shop/">Shop</a>
+      </nav>
+    </details>
   </div>
 </header>
 
