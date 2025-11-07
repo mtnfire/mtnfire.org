@@ -971,3 +971,30 @@ section.episodes{
 .site-header .site-title a {
   display: none !important;
 }
+/* Hide only the MTN.fire brand link/text in the header */
+.site-title,
+.site-title a,
+.header .site-title,
+.navbar .site-title {
+  display: none !important;
+}
+
+/* Keep the accessibility skip-link hidden unless focused (don’t break accessibility) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  background: #111;
+  color: #fff;
+  z-index: 10000;
+}
