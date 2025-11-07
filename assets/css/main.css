@@ -1213,3 +1213,62 @@ nav.site-nav {
     font-size: 0.95rem !important;
   }
 }
+/* ========== MTN.fire Header v4 (desktop right-aligned + mobile hamburger) ========== */
+.mf-header{position:sticky;top:0;z-index:50;background:var(--bg,#0b0b0b)}
+.mf-header .header-bar{display:flex;justify-content:flex-end;align-items:center;min-height:56px;padding:8px 16px;position:relative}
+
+/* Right side row (desktop) */
+.mf-header .nav-right{display:flex;align-items:center;gap:1.25rem}
+.mf-header .nav-links{display:flex;gap:1rem;align-items:center}
+.mf-header .nav-links a{text-decoration:none;opacity:.9}
+.mf-header .nav-links a:hover{opacity:1}
+.mf-header .nav-social{display:flex;align-items:center;gap:.5rem}
+
+/* ---- Mobile hamburger ---- */
+.mf-header .mf-nav-check{display:none}  /* hidden checkbox */
+
+.mf-header .mf-nav-burger{
+  display:none; cursor:pointer; width:36px; height:28px;
+  position:absolute; right:12px; top:14px;
+  align-items:center; justify-content:center;
+}
+.mf-header .mf-nav-burger span{
+  display:block; width:26px; height:2px; background:#e5e5e5; margin:5px 0; border-radius:2px;
+}
+
+/* Mobile layout */
+@media (max-width:768px){
+  /* show burger, hide socials on mobile */
+  .mf-header .mf-nav-burger{display:flex}
+  .mf-header .nav-social{display:none}
+
+  /* keep right side wrapper but remove gap so burger sits at far right */
+  .mf-header .nav-right{gap:0}
+
+  /* collapse nav into a dropdown panel (hidden by default) */
+  .mf-header .nav-links{
+    position:absolute; right:8px; top:100%;
+    background:rgba(20,20,20,.98);
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    padding:10px 12px; border-radius:12px;
+    display:none; flex-direction:column; gap:.5rem;
+    min-width:200px;
+  }
+  .mf-header .nav-links a{font-size:1rem; opacity:.95}
+
+  /* open when toggled */
+  .mf-header .mf-nav-check:checked ~ .nav-right .nav-links{display:flex}
+
+  /* give header a bit more height so burger has room */
+  .mf-header .header-bar{min-height:54px;padding:12px 8px}
+}
+/* --- Hide the hamburger checkbox entirely --- */
+.mf-header .mf-nav-check {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
