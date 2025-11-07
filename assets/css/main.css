@@ -1002,3 +1002,43 @@ section.episodes{
 a.logo {
   display: none !important;
 }
+/* Hide any brand text link everywhere */
+a.logo,
+.header a.logo,
+.site-header a.logo,
+.nav a.logo,
+.navbar a.logo {
+  display: none !important;
+}
+
+/* Mobile too, even if there are special mobile styles */
+@media (max-width: 700px) {
+  a.logo,
+  .header a.logo,
+  .site-header a.logo,
+  .nav a.logo,
+  .navbar a.logo {
+    display: none !important;
+  }
+}
+/* Center the nav row after removing the logo */
+.site-header .nav,
+.site-header .site-nav,
+.header .nav,
+nav.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* change to flex-start if you prefer left */
+  gap: .875rem;
+}
+
+/* If you have a burger + link row, keep the row balanced on mobile */
+@media (max-width: 700px) {
+  .site-header .wrap,
+  .header .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* center the whole header row */
+    gap: 12px;
+  }
+}
