@@ -23,31 +23,29 @@
 <body>
 
 
-  <header class="site-head">
-    <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+<header class="site-header">
+  <div class="header-bar">
+    <!-- (Optional) brand/logo spot — can be empty -->
+    <div class="brand-slot"></div>
 
-    <nav class="nav" aria-label="Primary">
-      <a href="{{ '/about/' | relative_url }}">About</a>
-      <a href="{{ '/blog/' | relative_url }}">Blog</a>
-      <a href="{{ '/contact/' | relative_url }}">Contact</a>
-       <a href="{{ '/donate/' | relative_url }}">Donate</a>
-      <a href="{{ '/episodes/' | relative_url }}">Episodes</a>
-       <a href="{{ '/firesides/' | relative_url }}">Fireside</a>
-       <a href="{{ '/shop/' | relative_url }}">Shop</a>
-
-
-      <!-- Desktop-only socials (hidden on mobile via CSS) -->
-      <div class="nav-social" aria-label="Social links">
-        {% include social-icons.html %}
-      </div>
-
-      {% if site.logo_image %}
-        <a href="{{ '/' | relative_url }}" class="nav-logo-link" aria-label="{{ site.title }}">
-          <img class="nav-mark" src="{{ site.logo_image | relative_url }}" alt="{{ site.title }} logo">
-        </a>
-      {% endif %}
+    <!-- Centered nav links -->
+    <nav class="nav-links">
+      <a href="/about/">About</a>
+      <a href="/blog/">Blog</a>
+      <a href="/contact/">Contact</a>
+      <a href="/donate/">Donate</a>
+      <a href="/episodes/">Episodes</a>
+      <a href="/firesides/">Fireside</a>
+      <a href="/shop/">Shop</a>
     </nav>
-  </header>
+
+    <!-- Socials on the right (your existing include is fine) -->
+    <div class="nav-social">
+      {% include social-icons.html %}
+    </div>
+  </div>
+</header>
+
 
   <!-- Mobile-only floating social rail (shown on mobile via CSS) -->
   <div class="social-rail" aria-label="Social links">
