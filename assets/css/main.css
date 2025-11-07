@@ -945,3 +945,8 @@ section.episodes{
   max-width: 100%;
   height: auto;
 }
+/* ===== Hide top-left MTN.fire link in header ===== */
+.site-header .site-title,
+.site-header .site-title a {
+  display: none !important;
+}
