@@ -1272,3 +1272,44 @@ nav.site-nav {
   width: 0;
   height: 0;
 }
+/* --- Mobile dropdown behavior fix --- */
+@media (max-width: 768px) {
+  /* Make dropdown cover the viewport and close properly */
+  .mf-header .nav-links {
+    position: fixed !important;
+    inset: 0 0 0 0;
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(6px);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    z-index: 999;
+    transition: opacity 0.25s ease;
+  }
+
+  .mf-header .nav-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    opacity: 0.95;
+  }
+
+  /* Show dropdown when checked */
+  .mf-header .mf-nav-check:checked ~ .nav-right .nav-links {
+    display: flex !important;
+  }
+
+  /* Burger icon sits above overlay */
+  .mf-header .mf-nav-burger {
+    z-index: 1001;
+  }
+}
+.mf-header .nav-links {
+  opacity: 0;
+  pointer-events: none;
+}
+.mf-header .mf-nav-check:checked ~ .nav-right .nav-links {
+  opacity: 1;
+  pointer-events: auto;
+}
