@@ -819,3 +819,61 @@ section.episodes{
     text-align: center;
   }
 }
+
+/* ===== Mobile centering + header sizing ===== */
+@media (max-width: 640px) {
+  html, body {
+    overflow-x: hidden;               /* prevent any subtle horizontal drift */
+  }
+
+  /* Center ALL page sections that use your .wrap helper */
+  .wrap,
+  .hero .wrap,
+  .latest .wrap,
+  .episodes .wrap,
+  .section .wrap {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* If your header uses a .wrap too, keep its padding small */
+  .site-header .wrap {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Shrink the MTN.fire wordmark/link slightly */
+  .site-header .site-title,
+  .site-header .site-title a {
+    font-size: 18px !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em;
+  }
+
+  /* Keep top nav links from feeling oversized */
+  .site-header .site-nav a {
+    font-size: 14px !important;
+  }
+
+  /* Make the hero content truly centered */
+  .hero .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Desktop/tablet: ensure global centering is sane */
+.wrap {
+  max-width: 1100px;                  /* adjust to your preferred page width */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
