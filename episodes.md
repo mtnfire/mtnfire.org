@@ -20,18 +20,23 @@ permalink: /episodes/
     {%- assign eps_sorted = eps | sort: "date" | reverse -%}
 
     {%- comment -%}
-      Group by season. We defensively check several keys and coerce to a number.
+      Group by season, excluding Season 99 (Fireside Chats)
     {%- endcomment -%}
     {%- assign groups = eps_sorted
         | group_by_exp: "p",
           "p.season | default: p.itunes_season | default: p.itunes.season | default: 0 | plus: 0"
       -%}
     {%- assign groups_desc = groups | sort: "name" | reverse -%}
+    {%- assign max_season = 0 -%}
+    {%- for g in groups_desc -%}
+      {%- if g.name != 99 and g.name != '99' and g.name > max_season -%}
+        {%- assign max_season = g.name | plus: 0 -%}
+      {%- endif -%}
+    {%- endfor -%}
 
     {%- for g in groups_desc -%}
       {%- unless g.name == 99 or g.name == '99' -%}
-    <details class="season" data-season="{{ g.name }}" {% if forloop.first %}open{% endif %}>
-
+      <details class="season" data-season="{{ g.name }}" {% if g.name == max_season %}open{% endif %}>
         <summary>
           <span class="season-title">
             {% if g.name == 0 %}Other{% else %}Season {{ g.name }}{% endif %}
