@@ -36,7 +36,7 @@ permalink: /firesides/
 
     <details class="season" data-season="99" open>
       <summary>
-        <span class="season-title">Fireside Chats (S99)</span>
+        <span class="season-title">Fireside Chats </span>
         <span class="muted">({{ fireside_count }} episodes)</span>
       </summary>
 
