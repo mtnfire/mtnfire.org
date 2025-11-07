@@ -16,42 +16,58 @@ permalink: /fireside/
       <button id="collapse-all" class="pill outline" type="button">Collapse all</button>
     </div>
 
-    {%- assign fireside = site.posts
-      | where_exp: "p", "p.categories contains 'episodes'"
-      | where_exp: "p", "(p.season | default: p.itunes_season | default: p.itunes.season | default: 0 | plus: 0) == 99"
-      | sort: "date" | reverse
-    -%}
+    {%- comment -%}
+      Collect posts in reverse-chronological order without using where_exp.
+    {%- endcomment -%}
+    {%- assign posts_sorted = site.posts | sort: "date" | reverse -%}
+
+    {%- comment -%}
+      Count Season 99 items (Fireside) without where_exp.
+    {%- endcomment -%}
+    {%- assign fireside_count = 0 -%}
+    {%- for post in posts_sorted -%}
+      {%- if post.categories contains 'episodes' -%}
+        {%- assign s = post.season | default: post.itunes_season | default: post.itunes.season | default: 0 | plus: 0 -%}
+        {%- if s == 99 -%}
+          {%- assign fireside_count = fireside_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
 
     <details class="season" data-season="99" open>
       <summary>
         <span class="season-title">Fireside Chats (S99)</span>
-        <span class="muted">({{ fireside | size }} episodes)</span>
+        <span class="muted">({{ fireside_count }} episodes)</span>
       </summary>
 
       <div class="cards">
-        {%- for post in fireside -%}
-          {%- assign summary = post.excerpt | strip_html | strip -%}
-          {%- if summary == "" -%}
-            {%- assign summary = post.content | markdownify | strip_html | strip | truncate: 180 -%}
+        {%- for post in posts_sorted -%}
+          {%- if post.categories contains 'episodes' -%}
+            {%- assign summary = post.excerpt | strip_html | strip -%}
+            {%- if summary == "" -%}
+              {%- assign summary = post.content | markdownify | strip_html | strip | truncate: 180 -%}
+            {%- endif -%}
+
+            {%- assign s = post.season | default: post.itunes_season | default: post.itunes.season | default: 0 | plus: 0 -%}
+            {%- assign e = post.episode | default: post.itunes_episode | default: post.itunes.episode | default: 0 | plus: 0 -%}
+
+            {%- if s == 99 -%}
+              <a class="card episode-card"
+                 href="{{ post.url | relative_url }}"
+                 data-text="{{ post.title | downcase | escape }} {{ summary | downcase | escape }} s{{ s }} e{{ e }}">
+                {% if post.cover %}<img loading="lazy" src="{{ post.cover }}" alt="">{% endif %}
+                <div class="card-body">
+                  <h3>{{ post.title }}</h3>
+                  <p class="muted">
+                    {{ post.date | date: "%b %-d, %Y" }}
+                    {% if post.duration %} · {{ post.duration }}{% endif %}
+                    · S{{ s }}{% if e > 0 %}E{{ e }}{% endif %}
+                  </p>
+                  <p class="line-clamp">{{ summary }}</p>
+                </div>
+              </a>
+            {%- endif -%}
           {%- endif -%}
-
-          {%- assign s = post.season | default: post.itunes_season | default: post.itunes.season | default: 99 | plus: 0 -%}
-          {%- assign e = post.episode | default: post.itunes_episode | default: post.itunes.episode | default: 0 | plus: 0 -%}
-
-          <a class="card episode-card"
-             href="{{ post.url | relative_url }}"
-             data-text="{{ post.title | downcase | escape }} {{ summary | downcase | escape }} s{{ s }} e{{ e }}">
-            {% if post.cover %}<img loading="lazy" src="{{ post.cover }}" alt="">{% endif %}
-            <div class="card-body">
-              <h3>{{ post.title }}</h3>
-              <p class="muted">
-                {{ post.date | date: "%b %-d, %Y" }}
-                {% if post.duration %} · {{ post.duration }}{% endif %}
-                · S{{ s }}{% if e > 0 %}E{{ e }}{% endif %}
-              </p>
-              <p class="line-clamp">{{ summary }}</p>
-            </div>
-          </a>
         {%- endfor -%}
       </div>
     </details>
